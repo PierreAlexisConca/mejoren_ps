@@ -1,0 +1,133 @@
+/* Estilos para el modal del carrito */
+.cart-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semi oscuro */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cart-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-modal-content {
+    position: fixed;
+    top: 0;
+    right: -450px;
+    /* Inicia fuera de la pantalla */
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    background-color: #F5F5F5;
+    /* palees-gray-light */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cart-modal.open .cart-modal-content {
+    right: 0;
+    /* Se desliza a la vista */
+}
+
+.cart-modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #D1D5DB;
+    /* palees-border */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1A237E;
+    /* palees-blue */
+    color: #F8E178;
+    /* palees-yellow */
+    font-weight: bold;
+}
+
+.cart-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.cart-modal-empty {
+    text-align: center;
+    color: #666666;
+    /* palees-text-medium */
+    margin-top: 4rem;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #333333;
+    /* palees-text-dark */
+}
+
+.cart-item-price {
+    color: #666666;
+    /* palees-text-medium */
+}
+
+.cart-item-remove-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    /* palees-danger */
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.cart-item-remove-btn:hover {
+    color: #b91c1c;
+    /* rojo más oscuro al pasar */
+}
+
+.cart-modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #D1D5DB;
+    /* palees-border */
+    background-color: #E5E5E5;
+    /* palees-bg-gray */
+}
+
+/* Botones de cantidad */
+.quantity-btn {
+    background-color: #F8E178;
+    /* palees-yellow */
+    border: 1px solid #D1D5DB;
+    /* palees-border */
+    color: #1A237E;
+    /* palees-blue */
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.quantity-btn:hover {
+    background-color: #1A237E;
+    /* palees-blue */
+    color: #F8E178;
+    /* palees-yellow */
+}

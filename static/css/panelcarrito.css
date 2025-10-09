@@ -1,0 +1,19 @@
+/* Estilos personalizados para el panel del carrito */
+.cart-panel-open {
+    transform: translateX(0);
+}
+
+.cart-panel-closed {
+    transform: translateX(100%);
+}
+
+/* Overlay para oscurecer el fondo */
+.cart-overlay {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cart-overlay-active {
+    visibility: visible;
+    opacity: 1;

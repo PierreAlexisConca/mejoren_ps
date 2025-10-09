@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Palees</title>
+
+    <!-- 1. DEPENDENCIAS CRÍTICAS: Tailwind CSS, Tipografía y Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Carga de Tailwind CSS CDN -->
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <script>
+        // Configuración de Tailwind para colores y fuentes personalizadas
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], dosis: ['Dosis', 'sans-serif'], }, colors: { 'palees-yellow': '#F8E178', 'palees-blue': '#1A237E', 'palees-gray-light': '#F5F5F5', 'palees-text-dark': '#333333', 'palees-text-medium': '#666666', 'palees-text-light': '#999999', 'palees-bg-gray': '#E5E5E5', 'palees-border': '#D1D5DB', }, boxShadow: { 'custom-light': '0px 2px 8px rgba(0, 0, 0, 0.05)', 'custom-medium': '0px 4px 12px rgba(0, 0, 0, 0.1)', } } } }
+    </script>
+
+    <!-- Carga de Font Awesome (Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- 2. ARCHIVOS ESTÁTICOS DE FLASK: Usando url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="bg-white shadow-custom-light fixed w-full z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- *** CORRECCIÓN CLAVE: Cambiado de 'home' a 'index' *** -->
+            <a href="{{ url_for('index') }}"
+                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
+            <div class="hidden md:flex space-x-8 lg:space-x-12">
+                <a href="{{ url_for('index') }}"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
+                <!-- El endpoint 'coleccion' está en app.py -->
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
+                <!-- El endpoint 'ofertas' está en app.py -->
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
+                <!-- El endpoint 'contacto' está en app.py -->
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link text-palees-blue hover:text-palees-yellow font-medium transition-colors duration-300 border-b-2 border-palees-yellow active">Contactanos</a>
+                <!-- El endpoint 'cuenta' está en app.py -->
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi
+                    cuenta</a>
+            </div>
+            <div class="flex items-center">
+                <button id="cart-button"
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
+                    <span>carrito</span>
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count"
+                        class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT: Contact Form and Info -->
+    <main class="pt-24">
+        <div class="container mx-auto px-6 py-12">
+            <h1 class="text-4xl font-dosis font-bold text-center text-palees-blue mb-4">Ponte en Contacto</h1>
+            <p class="text-center text-palees-text-medium mb-12">¿Tienes alguna pregunta? Escríbenos y te responderemos
+                pronto.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Información de Contacto (Columna Izquierda) -->
+                <div class="lg:col-span-1 space-y-8 p-6 bg-palees-gray-light rounded-xl shadow-custom-light">
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-map-marker-alt text-2xl text-palees-yellow mt-1"></i>
+                        <div>
+                            <p class="font-bold text-palees-text-dark">Nuestra Ubicación</p>
+                            <p class="text-palees-text-medium text-sm">Upis nuevo San luis, Mz. F lt 34</p>
+                            <p class="text-palees-text-medium text-sm">Lima, Perú</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-envelope text-2xl text-palees-yellow mt-1"></i>
+                        <div>
+                            <p class="font-bold text-palees-text-dark">Envíanos un Correo</p>
+                            <p class="text-palees-text-medium text-sm">palees@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <i class="fab fa-whatsapp text-2xl text-palees-yellow mt-1"></i>
+                        <div>
+                            <p class="font-bold text-palees-text-dark">Llámanos</p>
+                            <p class="text-palees-text-medium text-sm">+51 987 654 321</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-palees-border">
+                        <p class="font-bold text-palees-text-dark mb-3">Horario de Atención</p>
+                        <p class="text-palees-text-medium text-sm">Lunes - Viernes: 9:00 AM - 6:00 PM</p>
+                        <p class="text-palees-text-medium text-sm">Sábados: 9:00 AM - 1:00 PM</p>
+                    </div>
+                </div>
+
+                <!-- Formulario de Contacto (Columna Derecha) -->
+                <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-custom-medium">
+                    <form>
+                        <div class="mb-6">
+                            <label for="name" class="block text-palees-text-dark font-semibold mb-2">Nombre</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-2 border border-palees-border rounded-lg focus:outline-none focus:ring-2 focus:ring-palees-yellow">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-palees-text-dark font-semibold mb-2">Correo
+                                Electrónico</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-2 border border-palees-border rounded-lg focus:outline-none focus:ring-2 focus:ring-palees-yellow">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-palees-text-dark font-semibold mb-2">Mensaje</label>
+                            <textarea id="message" rows="5"
+                                class="w-full px-4 py-2 border border-palees-border rounded-lg focus:outline-none focus:ring-2 focus:ring-palees-yellow"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-palees-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-colors active:scale-95">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CRÍTICO: Modal del Carrito (asegura funcionalidad y estilos) -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
+                <button id="close-cart-btn" class="text-2xl">&times;</button>
+            </div>
+            <div id="cart-items-container" class="cart-modal-body">
+            </div>
+            <div class="cart-modal-footer">
+                <div class="flex justify-between items-center">
+                    <span class="text-lg font-bold">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span>
+                </div>
+                <!-- El endpoint 'checkout' está en app.py -->
+                <a href="{{ url_for('checkout') }}" id="checkout-link"
+                    class="w-full bg-palees-blue text-white text-center py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900 block">
+                    Finalizar Compra
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CRÍTICO: Footer (asegura estilos y coherencia) -->
+    <footer class="bg-palees-blue text-palees-gray-light py-8 mt-16 shadow-inner">
+        <div
+            class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-6 md:space-y-0 text-center md:text-left">
+            <div class="flex flex-col items-center md:items-start space-y-2">
+                <p class="text-lg font-bold mb-2">PALEES</p>
+                <p>RUC 10470554482</p>
+                <p>Dirección Legal: Upis nuevo San luis, <br> Mz. F lt 34</p>
+            </div>
+            <div class="flex flex-col items-center md:items-start space-y-2">
+                <p class="text-palees-yellow font-semibold mb-2">Explora</p>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Acerca de nosotros</a>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Nuestras Tiendas</a>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Preguntas Frecuentes</a>
+            </div>
+            <div class="flex flex-col items-center md:items-start space-y-2">
+                <p class="text-palees-yellow font-semibold mb-2">Información Legal</p>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Términos y condiciones</a>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Política de privacidad</a>
+                <a href="#" class="hover:text-palees-yellow transition-colors duration-300">Política de devoluciones</a>
+            </div>
+            <div class="flex flex-col items-center md:items-start space-y-2">
+                <p class="text-palees-yellow font-semibold mb-2">Síguenos</p>
+                <div class="flex space-x-4 text-2xl">
+                    <a href="#" class="hover:text-palees-yellow transition-colors duration-300"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-palees-yellow transition-colors duration-300"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-palees-yellow transition-colors duration-300"><i
+                            class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-sm opacity-80 border-t border-palees-yellow pt-6 mx-auto w-3/4">
+            &copy; 2025 Palees. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Scripts de JavaScript (usando url_for) -->
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contacto.js') }}"></script>
+
+
+
+</body>
+
+</html>

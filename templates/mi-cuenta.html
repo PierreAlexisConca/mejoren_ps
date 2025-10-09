@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta | Iniciar Sesión o Registrarse - Palees</title>
+    <!-- Configuración de Fuentes y Tailwind CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/carrito.css') }}" rel="stylesheet">
+
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body class="bg-palees-gray-light text-palees-text-dark">
+
+    <!-- HEADER (Navegación) - Mantenemos el mismo de la página de inicio -->
+    <header class="bg-white shadow-custom-light fixed w-full z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo principal -->
+            <a href="/"
+                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
+
+            <!-- Enlaces de navegación (Desktop) -->
+            <div class="hidden md:flex space-x-8 lg:space-x-12">
+                <a href="/"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
+                <a href="/coleccion"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
+                <a href="/ofertas"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
+                <a href="/contacto"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
+                <a href="/cuenta"
+                    class="nav-link text-palees-blue hover:text-palees-yellow font-medium transition-colors duration-300 border-b-2 border-palees-yellow">Mi
+                    cuenta</a>
+            </div>
+
+            <!-- Botón del Carrito (Dummy para consistencia) -->
+            <div class="flex items-center">
+                <button id="cart-button"
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-custom-light">
+                    <span>carrito</span>
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count"
+                        class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT - Formulario de Cuenta -->
+    <main class="pt-20 account-container">
+        <div class="w-full max-w-lg mx-auto p-4 sm:p-8">
+
+            <!-- Contenedor principal del formulario -->
+            <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-10 border-t-8 border-palees-blue">
+                <h1 class="text-4xl font-dosis font-extrabold text-palees-blue text-center mb-2">Bienvenido</h1>
+                <p class="text-center text-palees-text-medium mb-8">Administra tu cuenta de forma fácil y segura.</p>
+
+                <!-- Selector de Vista (Login/Register) -->
+                <div class="flex border-b border-palees-border mb-8">
+                    <button id="login-tab"
+                        class="form-switch-button flex-1 py-3 text-lg font-semibold text-palees-text-medium hover:text-palees-blue transition duration-200 active"
+                        onclick="switchForm('login')">
+                        Iniciar Sesión
+                    </button>
+                    <button id="register-tab"
+                        class="form-switch-button flex-1 py-3 text-lg font-semibold text-palees-text-medium hover:text-palees-blue transition duration-200"
+                        onclick="switchForm('register')">
+                        Registrarse
+                    </button>
+                </div>
+
+                <!-- Formulario de INICIO DE SESIÓN -->
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium text-palees-text-dark mb-1">Correo
+                            Electrónico</label>
+                        <input type="email" id="login-email" name="email" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                    </div>
+
+                    <div>
+                        <label for="login-password"
+                            class="block text-sm font-medium text-palees-text-dark mb-1">Contraseña</label>
+                        <input type="password" id="login-password" name="password" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                        <a href="#"
+                            class="text-xs text-palees-text-medium hover:text-palees-blue mt-2 block text-right">¿Olvidaste
+                            tu contraseña?</a>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-palees-blue text-white py-3 rounded-xl font-bold text-lg hover:bg-blue-900 transition duration-300 shadow-lg transform hover:scale-[1.01]">
+                        Acceder a Mi Cuenta
+                    </button>
+
+                    <div class="text-center text-sm text-palees-text-medium">
+                        o
+                    </div>
+
+                    <button type="button"
+                        class="w-full bg-palees-yellow text-palees-blue py-3 rounded-xl font-bold flex items-center justify-center space-x-3 border-2 border-palees-yellow hover:bg-yellow-500 transition duration-300">
+                        <i class="fab fa-google"></i>
+                        <span>Iniciar Sesión con Google</span>
+                    </button>
+                </form>
+
+                <!-- Formulario de REGISTRO (Inicialmente oculto) -->
+                <form id="register-form" class="space-y-6 hidden">
+                    <div>
+                        <label for="register-name" class="block text-sm font-medium text-palees-text-dark mb-1">Nombre
+                            Completo</label>
+                        <input type="text" id="register-name" name="name" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                    </div>
+
+                    <div>
+                        <label for="register-email" class="block text-sm font-medium text-palees-text-dark mb-1">Correo
+                            Electrónico</label>
+                        <input type="email" id="register-email" name="email" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                    </div>
+
+                    <div>
+                        <label for="register-password"
+                            class="block text-sm font-medium text-palees-text-dark mb-1">Contraseña</label>
+                        <input type="password" id="register-password" name="password" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                        <p class="text-xs text-palees-text-light mt-1">Mínimo 8 caracteres, una mayúscula y un número.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="register-confirm-password"
+                            class="block text-sm font-medium text-palees-text-dark mb-1">Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm-password" name="confirm-password" required
+                            class="w-full p-3 border border-palees-border rounded-lg focus:ring-2 focus:ring-palees-yellow focus:border-palees-yellow transition">
+                    </div>
+
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms-agree" required
+                            class="mt-1 h-4 w-4 text-palees-blue border-palees-border rounded focus:ring-palees-yellow">
+                        <label for="terms-agree" class="ml-2 block text-sm text-palees-text-medium">
+                            Acepto los <a href="#" class="text-palees-blue hover:underline">Términos y Condiciones</a> y
+                            la Política de Privacidad.
+                        </label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-palees-yellow text-palees-blue py-3 rounded-xl font-bold text-lg hover:bg-yellow-500 transition duration-300 shadow-lg transform hover:scale-[1.01]">
+                        Crear Cuenta Palees
+                    </button>
+
+                </form>
+
+                <!-- Área de Mensajes (Opcional: para mostrar errores/éxito) -->
+                <div id="message-area" class="mt-4 p-3 rounded-lg text-sm hidden"></div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER - Mantenemos el mismo de la página de inicio -->
+    <footer class="bg-palees-blue text-palees-gray-light py-10 mt-12 shadow-inner">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+
+            <!-- Columna 1: Logo y Redes -->
+            <div>
+                <h3 class="text-3xl font-dosis font-extrabold text-palees-yellow mb-4">PALEES</h3>
+                <p class="text-sm mb-4">Polos de calidad, diseñados para durar.</p>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Columna 2: Enlaces Rápidos -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Navegación</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/coleccion" class="hover:text-palees-yellow transition-colors">Comprar</a></li>
+                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Ofertas</a></li>
+                    <li><a href="/cuenta" class="hover:text-palees-yellow transition-colors">Mi Cuenta</a></li>
+                    <li><a href="/contacto" class="hover:text-palees-yellow transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Información -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Ayuda</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Tallas</a></li>
+                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Envíos y Entregas</a></li>
+                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Política de Devolución</a></li>
+                    <li><a href="/estado-pedido" class="hover:text-palees-yellow transition-colors">Rastrear Pedido</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Columna 4: Contacto -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Contacto</h4>
+                <p class="text-sm">Email: info@palees.com</p>
+                <p class="text-sm mt-2">Teléfono: +51 987 654 321</p>
+            </div>
+        </div>
+        <div
+            class="container mx-auto px-6 mt-8 pt-4 border-t border-palees-yellow border-opacity-30 text-center text-sm">
+            <p>&copy; 2025 Palees. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    
+</body>
+
+</html>
