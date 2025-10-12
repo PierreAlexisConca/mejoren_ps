@@ -1,4 +1,4 @@
-
+//contacto.js
 // Lógica dummy para el carrito (mantener el contador en la navegación)
 document.addEventListener('DOMContentLoaded', () => {
     const count = localStorage.getItem('cartCount') || 0;

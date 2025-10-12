@@ -1,4 +1,4 @@
-
+//loginregistro.js
 function switchForm(formType) {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');

@@ -1,32 +1,33 @@
+// cart.js
 document.addEventListener('DOMContentLoaded', () => {
-
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    // Elementos del DOM
     const cartButton = document.getElementById('cart-button');
     const cartModal = document.getElementById('cart-modal');
     const closeCartBtn = document.getElementById('close-cart-btn');
     const cartCount = document.getElementById('cart-count');
     const cartItemsContainer = document.getElementById('cart-items-container');
     const cartSubtotal = document.getElementById('cart-subtotal');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     const checkoutButton = document.getElementById('checkout-button');
 
+    // Constantes
     const CURRENCY_SYMBOL = 'S/. ';
     const TAX_RATE = 0.18;
 
-    const saveCart = () => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    };
+    // Guardar carrito en localStorage
+    const saveCart = () => localStorage.setItem('cart', JSON.stringify(cart));
 
+    // Contador del carrito
     const updateCartCount = () => {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCount.textContent = totalItems;
     };
 
-    const calculateSubtotal = () => {
-        return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    };
+    // Calcular subtotal
+    const calculateSubtotal = () => cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
+    // Renderizar items en modal
     const renderCartItems = () => {
         cartItemsContainer.innerHTML = '';
 
@@ -41,54 +42,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cart.forEach(item => {
             const itemElement = document.createElement('div');
-            itemElement.classList.add('cart-item');
+            itemElement.classList.add('cart-item', 'flex', 'items-center', 'justify-between', 'border-b', 'py-2');
             itemElement.innerHTML = `
-    
-`;
+                <div class="flex items-center gap-3">
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                    <div>
+                        <p class="font-semibold">${item.name}</p>
+                        <p class="text-sm text-gray-600">${CURRENCY_SYMBOL}${item.price.toFixed(2)}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="quantity-btn decrease-quantity-btn" data-id="${item.id}">−</button>
+<span>${item.quantity}</span>
+<button class="quantity-btn increase-quantity-btn" data-id="${item.id}">+</button>
+<button class="cart-item-remove-btn" data-id="${item.id}">&times;</button>
 
-
+                </div>
+            `;
             cartItemsContainer.appendChild(itemElement);
         });
 
         cartSubtotal.textContent = CURRENCY_SYMBOL + calculateSubtotal().toFixed(2);
 
-        document.querySelectorAll('.decrease-quantity-btn').forEach(button => {
-            button.addEventListener('click', (e) => updateQuantity(e.target.dataset.id, -1));
+        // Listeners dinámicos
+        document.querySelectorAll('.decrease-quantity-btn').forEach(btn => {
+            btn.addEventListener('click', e => updateQuantity(Number(e.target.dataset.id), -1));
         });
-        document.querySelectorAll('.increase-quantity-btn').forEach(button => {
-            button.addEventListener('click', (e) => updateQuantity(e.target.dataset.id, 1));
+        document.querySelectorAll('.increase-quantity-btn').forEach(btn => {
+            btn.addEventListener('click', e => updateQuantity(Number(e.target.dataset.id), 1));
         });
-        document.querySelectorAll('.cart-item-remove-btn').forEach(button => {
-            button.addEventListener('click', (e) => removeFromCart(e.target.dataset.id));
+        document.querySelectorAll('.cart-item-remove-btn').forEach(btn => {
+            btn.addEventListener('click', e => removeFromCart(Number(e.target.dataset.id)));
         });
     };
 
+    // Actualizar cantidad
     const updateQuantity = (productId, change) => {
         const item = cart.find(i => i.id === productId);
-        if (item) {
-            item.quantity += change;
-            if (item.quantity <= 0) {
-                removeFromCart(productId);
-            } else {
-                saveCart();
-                updateCartCount();
-                renderCartItems();
-            }
+        if (!item) return;
+
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            removeFromCart(productId);
+        } else {
+            saveCart();
+            updateCartCount();
+            renderCartItems();
         }
     };
 
+    // Añadir producto (con depuración)
     const addToCart = (product) => {
-        const existingItem = cart.find(item => item.id === product.id);
-        if (existingItem) {
-            existingItem.quantity += 1;
+        console.log('Producto añadido al carrito:', product); // <-- Depuración
+        const existing = cart.find(item => item.id === Number(product.id));
+        if (existing) {
+            existing.quantity += 1;
         } else {
-            cart.push({ ...product, quantity: 1 });
+            cart.push({ ...product, quantity: 1, id: Number(product.id) });
         }
         saveCart();
         updateCartCount();
         renderCartItems();
     };
 
+    // Eliminar producto
     const removeFromCart = (productId) => {
         cart = cart.filter(item => item.id !== productId);
         saveCart();
@@ -96,37 +113,38 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCartItems();
     };
 
+    // Abrir / cerrar modal
     const toggleCartModal = () => {
         cartModal.classList.toggle('open');
     };
 
-    if (addToCartButtons) {
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const product = {
-                    id: e.target.dataset.id,
-                    name: e.target.dataset.name,
-                    price: parseFloat(e.target.dataset.price),
-                    image: e.target.dataset.image
-                };
-                addToCart(product);
-            });
-        });
-    }
-
+    // Eventos globales
     if (cartButton) cartButton.addEventListener('click', toggleCartModal);
     if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCartModal);
     if (cartModal) {
-        cartModal.addEventListener('click', (e) => {
+        cartModal.addEventListener('click', e => {
             if (e.target === cartModal) toggleCartModal();
         });
     }
 
+    // Botones de añadir al carrito
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', e => {
+            const product = {
+                id: Number(e.currentTarget.dataset.id),
+                name: e.currentTarget.dataset.name,
+                price: Number(e.currentTarget.dataset.price),
+                image: e.currentTarget.dataset.image
+            };
+            addToCart(product);
+        });
+    });
+
+    // Ir a checkout
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
             if (cart.length > 0) {
                 saveCart();
-                // --- CAMBIO IMPORTANTE AQUÍ ---
                 window.location.href = '/checkout';
             } else {
                 alert('Tu carrito está vacío.');
@@ -134,32 +152,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Exponer info global del carrito
     window.cart = {
         getItems: () => cart,
         getSubtotal: calculateSubtotal,
         getCurrencySymbol: () => CURRENCY_SYMBOL,
         getTaxRate: () => TAX_RATE,
+        addToCart,
         clearCart: () => { cart = []; saveCart(); updateCartCount(); renderCartItems(); }
     };
 
+    // Inicializar
     updateCartCount();
     renderCartItems();
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    const orderIdElement = document.getElementById('order-id-status');
-    const orderId = localStorage.getItem('lastOrderId');
-    if (orderId && orderIdElement) {
-        orderIdElement.textContent = orderId;
+    // --- Sidebar / colección ---
+    const filterToggle = document.getElementById('filter-toggle');
+    if (filterToggle) {
+        filterToggle.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('hidden');
+        });
     }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const orderIdElement = document.getElementById('order-id');
-    const orderTotalElement = document.getElementById('order-total');
-    const CURRENCY_SYMBOL = window.cart.getCurrencySymbol();
-    const orderId = localStorage.getItem('lastOrderId');
-    const orderTotal = localStorage.getItem('lastOrderTotal');
-    if (orderId && orderIdElement) orderIdElement.textContent = orderId;
-    if (orderTotal && orderTotalElement) orderTotalElement.textContent = CURRENCY_SYMBOL + orderTotal;
 });

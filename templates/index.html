@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palees - Tienda de Ropa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -18,24 +18,33 @@
 <body>
     <header class="bg-white shadow-custom-light fixed w-full z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-3xl header-logo cursor-pointer">PALEES</a>
+            <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
             <div class="hidden md:flex space-x-8 lg:space-x-12">
-                <a href="/"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300 active">Inicio</a>
-                <a href="/coleccion"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
-                <a href="/ofertas"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
-                <a href="/contacto"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
-                <a href="/cuenta"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi
-                    cuenta</a>
+                <a href="{{ url_for('index') }}"
+                    class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                    Inicio
+                </a>
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link {% if request.path == url_for('coleccion') %}active{% endif %}">
+                    Categorías
+                </a>
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link {% if request.path == url_for('ofertas') %}active{% endif %}">
+                    Ofertas
+                </a>
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link {% if request.path == url_for('contacto') %}active{% endif %}">
+                    Contáctanos
+                </a>
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link {% if request.path == url_for('cuenta') %}active{% endif %}">
+                    Mi cuenta
+                </a>
             </div>
             <div class="flex items-center">
                 <button id="cart-button"
                     class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
-                    <span>carrito</span>
+                    <span>Carrito</span>
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span id="cart-count"
                         class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -43,6 +52,8 @@
             </div>
         </nav>
     </header>
+
+
 
     <main class="pt-20">
         <div class="carousel-container" id="mainCarousel">
@@ -60,7 +71,8 @@
                         <img src="{{ url_for('static', filename='image/CamisaLino.jpeg') }}" alt="Camisa de Lino"
                             class="w-full h-64 object-cover">
                         <div class="p-6">
-                            <h3 class="font-dosis text-2xl font-semibold text-palees-text-dark mb-2">Camisa de Lino Azul
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Camisa de Lino Azul
                             </h3>
                             <p class="text-palees-text-medium text-sm mb-4">Ligera y cómoda, ideal para el verano.</p>
                             <div class="flex justify-between items-center">
@@ -76,7 +88,8 @@
                         <img src="{{ url_for('static', filename='image/PantalonesCargo.jpeg') }}" alt="Pantalones Cargo"
                             class="w-full h-64 object-cover">
                         <div class="p-6">
-                            <h3 class="font-dosis text-2xl font-semibold text-palees-text-dark mb-2">Pantalones Cargo
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Pantalones Cargo
                                 Beige</h3>
                             <p class="text-palees-text-medium text-sm mb-4">Estilo urbano con máxima comodidad.</p>
                             <div class="flex justify-between items-center">
@@ -92,7 +105,8 @@
                         <img src="{{ url_for('static', filename='image/VestidoFluido.jpeg') }}" alt="Vestido Fluido"
                             class="w-full h-64 object-cover">
                         <div class="p-6">
-                            <h3 class="font-dosis text-2xl font-semibold text-palees-text-dark mb-2">Vestido Fluido
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Vestido Fluido
                                 Estampado</h3>
                             <p class="text-palees-text-medium text-sm mb-4">Elegancia y frescura para tu día.</p>
                             <div class="flex justify-between items-center">
@@ -108,21 +122,6 @@
             </div>
         </section>
     </main>
-    <div id="cart-modal" class="cart-modal">
-        <div class="cart-modal-content">
-            <div class="cart-modal-header">
-                <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2> <button id="close-cart-btn"
-                    class="text-2xl">&times;</button>
-            </div>
-            <div id="cart-items-container" class="cart-modal-body"></div>
-            <div class="cart-modal-footer">
-                <div class="flex justify-between items-center"> <span class="text-lg font-bold">Subtotal:</span> <span
-                        id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span> </div> <button id="checkout-button"
-                    class="w-full bg-palees-blue text-white py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900">Finalizar
-                    Compra</button>
-            </div>
-        </div>
-    </div>
     <!-- SECCIÓN DE CARACTERÍSTICAS / PROPUESTA DE VALOR -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
@@ -181,8 +180,7 @@
 
                 <!-- Categoría 2: Diseño Gráfico -->
                 <div class="relative group overflow-hidden rounded-xl shadow-custom-medium">
-                    <img src="https://placehold.co/600x400/F8E178/1A237E?text=POLOS+GRÁFICOS"
-                        alt="Polos con diseños gráficos modernos y llamativos"
+                    <img src="/static/image/PolosGraficos.jpeg" alt="Polos con diseños gráficos modernos y llamativos"
                         class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
                         onerror="this.onerror=null; this.src='https://placehold.co/600x400/F8E178/1A237E?text=POLOS+GRÁFICOS';">
                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -195,9 +193,11 @@
 
                 <!-- Categoría 3: Tendencia Oversize -->
                 <div class="relative group overflow-hidden rounded-xl shadow-custom-medium">
-                    <img src="/static/image/Jersey.jpeg" alt="Polos de corte holgado y estilo oversize"
+                    <img src="{{ url_for('static', filename='image/ChaquetaCuero.jpeg') }}"
+                        alt="Polos de corte holgado y estilo oversize"
                         class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/1A237E/F8E178?text=POLOS+OVERSIZE';">
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/1A237E/F8E178?text=POLOS%20OVERSIZE';">
+
                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                         <a href="/coleccion?cat=oversize"
                             class="text-white text-2xl font-dosis font-bold tracking-wider border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-palees-blue transition-colors duration-300">
@@ -205,6 +205,8 @@
                         </a>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </section>
@@ -304,6 +306,55 @@
         <div class="text-center mt-12 text-sm opacity-80 border-t border-palees-yellow pt-6 mx-auto w-3/4">
             &copy; 2025 Palees. Todos los derechos reservados.
         </div>
+        <!-- OVERLAY DEL CARRITO -->
+        <div id="cart-modal-overlay"
+            class="fixed inset-0 bg-black opacity-0 hidden transition-opacity duration-300 z-40"
+            onclick="toggleCartModal()"></div>
+
+        <!-- MODAL DEL CARRITO (panel derecho) -->
+        <div id="cart-modal"
+            class="cart-modal fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+            <div class="cart-modal-content flex flex-col h-full">
+                <!-- Cabecera -->
+                <div
+                    class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
+                    <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
+                    <button id="close-cart-btn"
+                        class="text-2xl text-palees-text-dark hover:text-red-500">&times;</button>
+                </div>
+
+                <!-- Contenedor productos (tu código) -->
+                <div id="cart-items-container" class="cart-modal-body flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Aquí se renderizan dinámicamente los productos -->
+                </div>
+
+                <!-- Footer (tu código) -->
+                <div class="cart-modal-footer p-6 border-t border-palees-bg-gray">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-lg font-bold">Subtotal:</span>
+                        <span id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span>
+                    </div>
+                    <button id="checkout-button"
+                        class="w-full bg-palees-blue text-white py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900">
+                        Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTÓN DEL CARRITO -->
+        <div class="fixed top-6 right-6 z-50 md:hidden">
+            <button id="cart-button"
+                class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-lg">
+                <span>Carrito</span>
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <span id="cart-count"
+                    class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
+        </div>
+
+
+
     </footer>
     <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>

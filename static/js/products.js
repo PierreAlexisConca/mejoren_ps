@@ -1,3 +1,4 @@
+// Módulo de productos y carrito: products.js
 const products = [
     { id: 1, name: "Polo Básico Pima", color: "Amarillo Sol", originalPrice: 59.90, price: 44.92, discount: "25%", imgSrc: "/static/images/polo-amarillo.jpg" },
     { id: 2, name: "Polo Gráfico Urbano", color: "Diseño: Minimal", originalPrice: 79.00, price: 55.30, discount: "30%", imgSrc: "/static/images/polo-azul.jpg" },
@@ -11,7 +12,7 @@ const products = [
     { id: 10, name: "Polo Sin Mangas Sport", color: "Azul Marino", originalPrice: 49.90, price: 34.93, discount: "30%", imgSrc: "/static/images/polo-sport.jpg" }
 ];
 // --- ESTADO DEL CARRITO ---
-let cart = [];
+let cart = window.cart?.getItems() || [];
 
 // --- PAGINATION STATE ---
 const productsPerPage = 4;
@@ -97,7 +98,7 @@ window.addToCart = (productId) => {
  * @param {number} change (+1 o -1)
  */
 window.changeQuantity = (productId, change) => {
-    const itemIndex = cart.findIndex(item => item.id === productId);
+    const itemIndex = cart.findIndex(item => item.id === Number(productId));
     if (itemIndex > -1) {
         cart[itemIndex].quantity += change;
 
@@ -109,9 +110,7 @@ window.changeQuantity = (productId, change) => {
     }
 };
 
-/**
- * Simula la finalización de la compra.
- */
+//Simula la finalización de la compra.
 window.checkout = () => {
     if (cart.length === 0) {
         showCartMessage('No hay productos para comprar.', 'error');
@@ -129,7 +128,7 @@ window.checkout = () => {
 // --- RENDERIZADO DE PRODUCTOS ---
 
 /**
- * Genera las tarjetas de producto dinámicamente según la página.
+//Genera las tarjetas de producto dinámicamente según la página.
  * @param {number} page
  */
 const renderProducts = (page) => {
@@ -147,8 +146,14 @@ const renderProducts = (page) => {
     const productsToDisplay = products.slice(startIndex, endIndex);
 
     container.innerHTML = productsToDisplay.map(product => `
+    <div class="product-card">
+        <img src="${product.imgSrc}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${formatCurrency(product.price)}</p>
+        <button onclick="addToCart(${product.id})">Añadir al carrito</button>
+    </div>
+`).join('');
 
-            `).join('');
 };
 
 // --- FUNCIONES DE PAGINACIÓN ---
@@ -185,35 +190,48 @@ window.renderPagination = () => {
     const paginationContainer = document.getElementById('pagination-container');
     const totalPages = getTotalPages();
 
-    let paginationHtml = '';
-    const prevDisabled = currentPage === 1;
-    const nextDisabled = currentPage === totalPages;
-
     if (totalPages <= 1) {
-        paginationContainer.innerHTML = ''; // No mostrar paginación si solo hay 1 página
+        paginationContainer.innerHTML = ''; // No mostrar si solo hay 1 página
         return;
     }
 
+    let paginationHtml = '';
+
     // Botón Anterior
     paginationHtml += `
-
-            `;
+        <button 
+            onclick="prevPage()" 
+            class="px-3 py-1 rounded-lg font-semibold border border-palees-blue text-palees-blue hover:bg-palees-blue hover:text-white transition ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}" 
+            ${currentPage === 1 ? 'disabled' : ''}>
+            Anterior
+        </button>
+    `;
 
     // Números de Página
     for (let i = 1; i <= totalPages; i++) {
         const isActive = i === currentPage;
         paginationHtml += `
-
-                `;
+            <button 
+                onclick="goToPage(${i})" 
+                class="px-3 py-1 rounded-lg font-semibold border ${isActive ? 'bg-palees-blue text-white border-palees-blue' : 'border-palees-blue text-palees-blue hover:bg-palees-blue hover:text-white transition'}">
+                ${i}
+            </button>
+        `;
     }
 
     // Botón Siguiente
     paginationHtml += `
+        <button 
+            onclick="nextPage()" 
+            class="px-3 py-1 rounded-lg font-semibold border border-palees-blue text-palees-blue hover:bg-palees-blue hover:text-white transition ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" 
+            ${currentPage === totalPages ? 'disabled' : ''}>
+            Siguiente
+        </button>
+    `;
 
-            `;
-
-    paginationContainer.innerHTML = `<nav class="flex space-x-2">${paginationHtml}</nav>`;
+    paginationContainer.innerHTML = `<nav class="flex justify-center space-x-2 mt-6">${paginationHtml}</nav>`;
 };
+
 
 
 // --- RENDERIZADO DE CARRITO (Sin cambios en lógica, solo para completar) ---
@@ -238,14 +256,31 @@ window.renderCart = () => {
         total += itemSubtotal;
 
         return `
-                    
-                `;
+            <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <img src="${item.imgSrc}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg border">
+                    <div>
+                        <p class="font-semibold text-palees-blue text-sm">${item.name}</p>
+                        <p class="text-xs text-palees-text-medium">${formatCurrency(item.price)} c/u</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="changeQuantity(${item.id}, -1)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">−</button>
+                    <span class="font-semibold">${item.quantity}</span>
+                    <button onclick="changeQuantity(${item.id}, 1)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
+                </div>
+                <div class="font-semibold text-palees-blue text-sm">
+                    ${formatCurrency(itemSubtotal)}
+                </div>
+            </div>
+        `;
     }).join('');
 
     cartItemsContainer.innerHTML = cartHtml;
     cartTotalElement.textContent = formatCurrency(total);
     cartCountEl.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
 };
+
 
 // --- INICIALIZACIÓN ---
 window.onload = () => {

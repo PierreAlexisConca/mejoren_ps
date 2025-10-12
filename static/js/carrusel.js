@@ -1,4 +1,4 @@
-// Módulo del carrusel
+// Módulo del carrusel carrusel.js
 const carousel = {
     config: {
         autoplayInterval: 5000,

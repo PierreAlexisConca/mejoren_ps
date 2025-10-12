@@ -1,4 +1,4 @@
-/* CSS para gestionar el sidebar de filtros (izquierdo) */
+/* CSS para gestionar el sidebar de filtros (izquierdo) categorias. css */
 .sidebar-overlay {
     z-index: 40;
     transition: opacity 0.3s ease-in-out;

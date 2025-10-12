@@ -1,3 +1,4 @@
+/*main.css*/
 body {
     font-family: 'Inter', sans-serif;
     color: #333333;
@@ -130,6 +131,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -156,4 +158,364 @@ body {
 .product-card:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     transform: scale(1.05);
+}
+
+/* 🟡 BOTONES DE CANTIDAD (+ y -) */
+.quantity-btn {
+    cursor: pointer;
+    /* ← cambia a manito */
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #FFD700;
+    /* Amarillo brillante al pasar */
+    color: #000;
+    /* Texto oscuro para contraste */
+}
+
+/* 🟡 LINKS DEL MENÚ DE NAVEGACIÓN */
+nav .nav-link {
+    cursor: pointer;
+    /* ← cambia a manito */
+    transition: color 0.25s ease;
+}
+
+nav .nav-link:hover {
+    color: #FFD700 !important;
+    /* Cambia a amarillo al pasar */
+}
+
+/* ✨ Subrayado animado en links del menú */
+nav .nav-link {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    /* separación pequeña debajo del texto */
+    width: 0;
+    height: 2px;
+    background-color: #FFD700;
+    /* Amarillo brillante */
+    transition: width 0.3s ease;
+}
+
+nav .nav-link:hover {
+    color: #FFD700 !important;
+    /* Cambia el color del texto al pasar */
+}
+
+nav .nav-link:hover::after {
+    width: 100%;
+    /* subrayado se extiende suavemente */
+}
+
+.nav-link.active {
+    color: #F8E178;
+    /* palees-yellow */
+    font-weight: 600;
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #F8E178;
+    /* línea amarilla debajo */
+    border-radius: 2px;
+}
+
+/* ===== Navegación activa ===== */
+.nav-link {
+    color: #1A237E;
+    /* azul oscuro por defecto */
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar el mouse */
+}
+
+/* Sección activa */
+.nav-link.active {
+    color: #FFD700;
+    /* amarillo brillante */
+    font-weight: 600;
+}
+
+/* Subrayado opcional en el link activo */
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #FFD700;
+    border-radius: 2px;
+}
+
+/* FONDOS */
+.bg-palees-gray-light {
+    background-color: #F9FAFB;
+    /* gris muy claro, elegante */
+}
+
+/* BORDES */
+.border-palees-yellow {
+    border-color: #F8E178;
+    /* amarillo pastel de marca */
+}
+
+/* TEXTOS */
+.text-palees-blue {
+    color: #1A237E;
+    /* azul intenso */
+}
+
+.text-palees-text-dark {
+    color: #333333;
+    /* gris oscuro legible */
+}
+
+.text-palees-text-medium {
+    color: #666666;
+    /* gris medio, secundario */
+}
+
+.add-to-cart-btn {
+    background-color: #1A237E;
+    /* azul intenso de tu marca */
+    color: #F9FAFB;
+    /* texto blanco */
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #F8E178;
+    /* amarillo pastel al pasar */
+    color: #1A237E;
+    /* texto azul para contraste */
+}
+
+/* Contenedor del carrito */
+.cart-container {
+    background-color: #F9FAFB;
+    /* gris muy claro, igual que los comentarios */
+    border: 2px solid #F8E178;
+    /* amarillo pastel */
+    border-radius: 16px;
+    padding: 1rem;
+    color: #333333;
+    /* texto oscuro */
+}
+
+/* Botones del carrito */
+.cart-btn {
+    background-color: #1A237E;
+    /* azul intenso */
+    color: #1A237E;
+    /* texto claro */
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-btn:hover {
+    background-color: #1A237E;
+    /* amarillo pastel al pasar */
+    color: #F8E178;
+    /* texto azul para contraste */
+}
+
+/* Contenedor del footer */
+.footer {
+    background-color: #1A237E;
+    /* azul intenso de tu marca */
+    color: #F9FAFB;
+    /* texto claro */
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+/* Enlaces dentro del footer */
+.footer a {
+    color: #F8E178;
+    /* amarillo pastel */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar */
+}
+
+/* Títulos dentro del footer */
+.footer h4 {
+    color: #F9FAFB;
+    /* texto claro */
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Iconos sociales */
+.footer .social-icon {
+    color: #F8E178;
+    /* amarillo pastel */
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer .social-icon:hover {
+    color: #FFD700;
+    /* amarillo brillante */
+}
+
+/* Contenedor del footer */
+.footer {
+    background-color: #1A237E;
+    /* azul intenso */
+    color: #FFFFFF;
+    /* todo texto blanco */
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+/* Enlaces dentro del footer */
+.footer a {
+    color: #FFFFFF;
+    /* enlaces blancos */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar */
+}
+
+/* Títulos dentro del footer */
+.footer h4 {
+    color: #FFFFFF;
+    /* títulos blancos */
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Iconos sociales */
+.footer .social-icon {
+    color: #FFFFFF;
+    /* iconos blancos */
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer .social-icon:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar */
+}
+
+/* Fondo azul para banner/footer */
+.bg-palees-blue {
+    background-color: #1A237E;
+    /* azul intenso */
+}
+
+/* Texto amarillo para títulos y links */
+.text-palees-yellow {
+    color: #F8E178;
+    /* amarillo pastel */
+}
+
+/* Fondo amarillo para botones */
+.bg-palees-yellow {
+    background-color: #F8E178;
+}
+
+/* Footer general */
+footer {
+    color: #FFFFFF;
+    /* Todo texto blanco */
+}
+
+/* Enlaces dentro del footer */
+footer a {
+    color: #FFFFFF;
+    /* enlaces blancos */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar */
+}
+
+/* Títulos dentro del footer (p.ej. Explora, Información Legal) */
+footer p.text-palees-yellow,
+footer h4 {
+    color: #FFFFFF;
+    /* blanco para títulos y subtítulos */
+}
+
+/* Iconos sociales dentro del footer */
+footer .social-icon {
+    color: #FFFFFF;
+    /* iconos blancos */
+}
+
+footer .social-icon:hover {
+    color: #FFD700;
+    /* amarillo brillante al pasar */
+}
+
+/* Texto de copyright */
+footer .text-sm {
+    color: #FFFFFF;
+    /* blanco */
+}
+
+.cart-container {
+    background-color: #F9FAFB;
+    /* fondo claro */
+    border: 2px solid #F8E178;
+    /* borde amarillo */
+    border-radius: 16px;
+    padding: 1rem;
+    color: #FFFFFF;
+    /* texto dentro del carrito en blanco */
+}
+
+.cart-modal-header h2 {
+    color: #F8E178;
+    /* amarillo pastel */
+    font-weight: 700;
 }

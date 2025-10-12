@@ -162,20 +162,23 @@
     <!-- CART PANEL (Panel lateral fijo y funcional) -->
     <aside id="cart-panel"
         class="cart-panel-closed fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl z-50 transition-transform duration-300 flex flex-col">
+
+        <!-- Encabezado del Carrito -->
         <div class="p-6 border-b border-palees-bg-gray flex justify-between items-center bg-palees-blue text-white">
-            <h2 class="text-2xl font-dosis font-bold text-palees-yellow">Mi Carrito <i
-                    class="fas fa-shopping-cart ml-2"></i></h2>
+            <h2 class="text-2xl font-dosis font-bold text-palees-yellow">
+                Mi Carrito <i class="fas fa-shopping-cart ml-2"></i>
+            </h2>
             <button onclick="toggleCart()" class="text-white hover:text-palees-yellow transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
 
-        <!-- Mensajes (Simula un pop-up de alerta) -->
+        <!-- Mensajes (tipo alerta) -->
         <div id="cart-message-box" class="p-4 bg-palees-yellow text-palees-blue font-semibold hidden text-center"></div>
 
         <!-- Elementos del Carrito -->
         <div id="cart-items-list" class="flex-grow overflow-y-auto p-6 space-y-4">
-            <!-- Items del carrito se renderizan aquí -->
+            <!-- 🛒 Los items del carrito se renderizan dinámicamente desde products.js -->
             <p class="text-center text-palees-text-medium italic pt-4">El carrito está vacío.</p>
         </div>
 
@@ -190,97 +193,11 @@
                 Finalizar Compra
             </button>
         </div>
-        <div
-            class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300 relative">
-            <!-- Etiqueta de Descuento -->
-            <span
-                class="absolute top-3 left-3 bg-palees-red text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
-                -${product.discount} OFF
-            </span>
-
-            <a href="/producto/${product.id}">
-                <img src="${product.imgSrc}" alt="${product.name}"
-                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/E5E5E5/1A237E?text=${product.name.replace(/\s/g, '+')}';">
-            </a>
-
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-palees-blue">${product.name}</h3>
-                <p class="text-sm text-palees-text-medium mb-2">${product.color}</p>
-
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3">
-                    <div class="mb-3 sm:mb-0">
-                        <span class="text-sm line-through text-gray-400 mr-2">
-                            ${formatCurrency(product.originalPrice)}
-                        </span>
-                        <span class="text-xl font-bold text-palees-red">
-                            ${formatCurrency(product.price)}
-                        </span>
-                    </div>
-
-                    <!-- BOTÓN "Añadir al Carrito" -->
-                    <button onclick="addToCart(${product.id})"
-                        class="w-full sm:w-auto bg-palees-yellow text-palees-blue px-3 py-2 rounded-lg font-bold text-sm hover:bg-yellow-500 transition duration-200 shadow-md flex items-center justify-center transform active:scale-95"
-                        title="Añadir al carrito">
-                        Añadir
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="pagination-container" class="flex justify-center mt-6 space-x-2">
-            <button onclick="prevPage()"
-                class="px-4 py-2 text-palees-text-medium border rounded-lg hover:bg-palees-gray-light transition ${prevDisabled ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'hover:bg-palees-yellow'}"
-                ${prevDisabled ? 'disabled' : '' }>
-                &laquo; Anterior
-            </button>
-
-            <button onclick="goToPage(${i})"
-                class="px-4 py-2 border rounded-lg font-semibold transition ${isActive ? 'text-white bg-palees-blue border-palees-blue shadow-md' : 'text-palees-text-dark hover:bg-palees-gray-light'}">
-                ${i}
-            </button>
-
-            <button onclick="nextPage()"
-                class="px-4 py-2 text-palees-text-medium border rounded-lg hover:bg-palees-gray-light transition ${nextDisabled ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'hover:bg-palees-yellow'}"
-                ${nextDisabled ? 'disabled' : '' }>
-                Siguiente &raquo;
-            </button>
-        </div>
-        <div class="flex items-center space-x-4 p-3 bg-palees-gray-light rounded-lg shadow-custom-light">
-            <img src="${item.imgSrc}" class="w-16 h-16 object-cover rounded-md" alt="${item.name}"
-                onerror="this.onerror=null; this.src='https://placehold.co/64x64/E5E5E5/1A237E?text=Polo';">
-
-            <div class="flex-grow">
-                <p class="font-medium text-palees-blue">${item.name}</p>
-                <p class="text-sm text-palees-text-medium">${formatCurrency(item.price)}</p>
-                <p class="font-bold text-palees-red mt-1">${formatCurrency(itemSubtotal)}</p>
-            </div>
-
-            <div class="flex items-center space-x-1 border border-palees-bg-gray rounded-lg">
-                <button onclick="changeQuantity(${item.id}, -1)"
-                    class="w-7 h-7 flex items-center justify-center text-sm text-palees-blue hover:bg-palees-gray-light rounded-l-lg transition"
-                    title="Disminuir cantidad">
-                    <i class="fas fa-minus"></i>
-                </button>
-
-                <span class="font-semibold text-palees-text-dark text-sm w-5 text-center">${item.quantity}</span>
-
-                <button onclick="changeQuantity(${item.id}, 1)"
-                    class="w-7 h-7 flex items-center justify-center text-sm text-palees-blue hover:bg-palees-gray-light rounded-r-lg transition"
-                    title="Aumentar cantidad">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-        </div>
-
     </aside>
 
     <!-- Scripts para el manejo del Carrito, Paginación y la Interfaz -->
     <script src="/static/js/products.js"></script>
 
-    <!--  <script>
-
-
-    </script> 
 </body>
 
 </html>

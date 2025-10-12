@@ -5,33 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colección | Polos de Algodón Pima - Palees</title>
-    <!-- Configuración de Fuentes y Tailwind CSS -->
+
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/categories.css') }}" rel="stylesheet">
 
-    <!-- Iconos de Font Awesome -->
+    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
 </head>
 
 <body class="bg-palees-gray-light text-palees-text-dark">
 
-    <!-- OVERLAY DEL CARRITO -->
-    <div id="cart-modal-overlay" class="fixed inset-0 bg-black opacity-0 cart-modal-overlay"
-        onclick="toggleCartModal()"></div>
-
-    <!-- HEADER (Navegación) -->
+    <!-- HEADER -->
     <header class="bg-white shadow-custom-light fixed w-full z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo principal -->
+            <!-- Logo -->
             <a href="/"
                 class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
 
-            <!-- Enlaces de navegación (Desktop) -->
+            <!-- Navegación Desktop -->
             <div class="hidden md:flex space-x-8 lg:space-x-12">
                 <a href="/"
                     class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
@@ -46,7 +45,7 @@
                     cuenta</a>
             </div>
 
-            <!-- Botón del Carrito -->
+            <!-- Botón Carrito -->
             <div class="flex items-center">
                 <button id="cart-button" onclick="toggleCartModal()"
                     class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-custom-light">
@@ -59,59 +58,60 @@
         </nav>
     </header>
 
-    <!-- MAIN CONTENT - Colección de Productos -->
+    <!-- MAIN -->
     <main class="pt-20 pb-12">
         <div class="container mx-auto px-6">
 
-            <!-- Breadcrumbs / Título -->
+            <!-- Título -->
             <div class="mb-8">
                 <h1 class="text-4xl font-dosis font-extrabold text-palees-blue mb-2">Colección Completa</h1>
                 <p class="text-palees-text-medium text-lg">Descubre la suavidad inigualable del algodón Pima en todos
                     nuestros diseños.</p>
             </div>
 
-            <!-- Botón de Filtros (Solo Móvil) -->
+            <!-- Filtros Móvil -->
             <button id="filter-toggle"
                 class="md:hidden w-full bg-palees-blue text-white py-2 rounded-lg mb-6 font-semibold flex items-center justify-center space-x-2 hover:bg-blue-900 transition">
                 <i class="fas fa-filter"></i>
                 <span>Mostrar Filtros</span>
             </button>
 
-            <!-- Grid principal (Filtros + Productos) -->
+            <!-- Grid principal: Sidebar + Productos -->
             <div class="flex flex-col md:flex-row gap-8">
 
-                <!-- SIDEBAR DE FILTROS (Panel lateral) -->
-                <!-- Overlay para móvil -->
-                <div id="sidebar-overlay" class="hidden md:hidden fixed inset-0 bg-black opacity-0 sidebar-overlay"
-                    onclick="toggleSidebar()"></div>
-
+                <!-- Sidebar de filtros -->
                 <aside id="sidebar"
                     class="sidebar fixed top-0 left-0 h-full w-64 bg-white p-6 shadow-2xl md:static md:w-auto md:shadow-none md:p-0 md:bg-transparent">
                     <div class="md:sticky md:top-24">
-                        <div class="flex justify-between items-center mb-6 md:hidden">
-                            <h2 class="text-2xl font-dosis font-bold text-palees-blue">Filtros</h2>
-                            <button class="text-palees-text-dark text-3xl" onclick="toggleSidebar()">&times;</button>
-                        </div>
 
-                        <!-- Filtro por Categoría -->
-                        <div class="mb-8 p-4 bg-palees-gray-light rounded-xl shadow-custom-light">
-                            <h3
-                                class="text-lg font-semibold text-palees-text-dark mb-3 border-b pb-2 border-palees-border">
-                                Categoría</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><a href="#" class="text-palees-text-medium hover:text-palees-blue transition">Todos
-                                        los Polos</a></li>
-                                <li><a href="#" class="text-palees-blue font-medium transition">Polos Clásicos (12)</a>
-                                </li>
-                                <li><a href="#" class="text-palees-text-medium hover:text-palees-blue transition">Diseño
-                                        Gráfico (8)</a></li>
-                                <li><a href="#"
-                                        class="text-palees-text-medium hover:text-palees-blue transition">Tendencia
-                                        Oversize (5)</a></li>
-                                <li><a href="#" class="text-palees-text-medium hover:text-palees-blue transition">Polos
-                                        con Textura (3)</a></li>
-                            </ul>
-                        </div>
+                        <!-- Categorías -->
+                        <ul class="space-y-2 text-sm mb-6">
+                            <li>
+                                <a href="{{ url_for('ofertas') }}"
+                                    class="text-palees-text-medium hover:text-palees-blue transition {{ '' if selected_category else 'font-semibold text-palees-blue' }}">Todos
+                                    los Polos</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('coleccion', category='Clasico') }}"
+                                    class="{{ 'font-semibold text-palees-blue' if selected_category == 'Clasico' else 'text-palees-text-medium' }}">Polos
+                                    Clásicos</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('coleccion', category='Urbano') }}"
+                                    class="{{ 'font-semibold text-palees-blue' if selected_category == 'Urbano' else 'text-palees-text-medium' }}">Diseño
+                                    Gráfico</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('ofertas', category='Oversize') }}"
+                                    class="text-palees-text-medium hover:text-palees-blue transition {{ 'font-semibold text-palees-blue' if selected_category == 'Oversize' else '' }}">Tendencia
+                                    Oversize</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('ofertas', category='Textura') }}"
+                                    class="text-palees-text-medium hover:text-palees-blue transition {{ 'font-semibold text-palees-blue' if selected_category == 'Textura' else '' }}">Polos
+                                    con Textura</a>
+                            </li>
+                        </ul>
 
                         <!-- Filtro por Talla -->
                         <div class="mb-8 p-4 bg-palees-gray-light rounded-xl shadow-custom-light">
@@ -148,13 +148,14 @@
                                     style="background-color: #00FF00;"></div>
                             </div>
                         </div>
+
                     </div>
                 </aside>
 
-                <!-- CONTENEDOR DE PRODUCTOS -->
+                <!-- Productos -->
                 <section class="flex-1">
 
-                    <!-- Barra de Ordenamiento -->
+                    <!-- Ordenamiento -->
                     <div class="flex justify-between items-center mb-6 p-3 bg-white rounded-xl shadow-custom-light">
                         <p class="text-palees-text-medium text-sm hidden sm:block">Mostrando 1–9 de 28 productos</p>
                         <div class="flex items-center space-x-3">
@@ -169,201 +170,177 @@
                         </div>
                     </div>
 
-                    <!-- Cuadrícula de Productos -->
+                    <!-- Grid de productos -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-                        <!-- Tarjeta de Producto 1 (Clásico) - Botón actualizado -->
+                        <!-- Producto 1 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/1">
                                 <img src="https://placehold.co/400x500/1A237E/FFFFFF?text=Polo+Clásico+Azul"
                                     alt="Polo Clásico Azul Marino"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/1A237E/FFFFFF?text=Polo+Clásico+Azul';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Clásico Algodón Pima</h3> <span
-                                    class="cart-count-product" data-id="1">0</span>
-
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Clásico Algodón Pima</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">Color: Azul Marino</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-palees-text-dark">S/. 59.90</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="1"
-                                        data-name="Polo Clásico Algodón Pima (Azul)" data-price="59.90"
+                                        data-id="1" data-name="Polo Clásico Algodón Pima (Azul)" data-price="59.90"
                                         data-image="https://placehold.co/100x120/1A237E/FFFFFF?text=Polo+Azul">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta de Producto 2 (Gráfico) - Botón actualizado -->
+                        <!-- Producto 2 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/2">
                                 <img src="https://placehold.co/400x500/F8E178/1A237E?text=Diseño+Geométrico"
                                     alt="Polo Diseño Geométrico Amarillo"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/F8E178/1A237E?text=Diseño+Geométrico';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Edición Limitada</h3> (<span
-                                    id="cart-count-modal" data-id="2">0</span>)
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Edición Limitada</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">Diseño: Abstracto</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-red-600">S/. 75.00</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="2"
-                                        data-name="Polo Edición Limitada (Abstracto)" data-price="75.00"
+                                        data-id="2" data-name="Polo Edición Limitada (Abstracto)" data-price="75.00"
                                         data-image="https://placehold.co/100x120/F8E178/1A237E?text=Polo+Diseño">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta de Producto 3 (Oversize) - Botón actualizado -->
+                        <!-- Producto 3 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/3">
                                 <img src="https://placehold.co/400x500/E5E5E5/333333?text=Polo+Oversize+Gris"
                                     alt="Polo Oversize Gris Melange"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/E5E5E5/333333?text=Polo+Oversize+Gris';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Relax Oversize</h3> (<span
-                                    id="cart-count-modal" data-id="3">0</span>)
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Relax Oversize</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">Corte: Holgado</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-palees-text-dark">S/. 65.50</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="3" data-name="Polo Relax Oversize (Gris)"
-                                        data-price="65.50"
+                                        data-id="3" data-name="Polo Relax Oversize (Gris)" data-price="65.50"
                                         data-image="https://placehold.co/100x120/E5E5E5/333333?text=Polo+Gris">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Producto 4 (Placeholder) - Botón actualizado -->
+                        <!-- Producto 4 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/4">
                                 <img src="https://placehold.co/400x500/1A237E/F8E178?text=Polo+Blanco+Pima"
                                     alt="Polo Blanco de Algodón Pima"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/1A237E/F8E178?text=Polo+Blanco+Pima';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Básico Esencial</h3> (<span
-                                    id="cart-count-modal" data-id="4">0</span>)
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Básico Esencial</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">El más suave</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-palees-text-dark">S/. 54.90</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="4" data-name="Polo Básico Esencial (Blanco)"
-                                        data-price="54.90"
+                                        data-id="4" data-name="Polo Básico Esencial (Blanco)" data-price="54.90"
                                         data-image="https://placehold.co/100x120/1A237E/F8E178?text=Polo+Blanco">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta 5 - Botón actualizado -->
+                        <!-- Producto 5 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/5">
                                 <img src="https://placehold.co/400x500/F8E178/1A237E?text=Polo+Textura"
                                     alt="Polo de textura piqué"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/F8E178/1A237E?text=Polo+Textura';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Piqué Premium</h3> (<span
-                                    id="cart-count-modal" data-id="5">0</span>)
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Piqué Premium</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">Tejido con cuerpo</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-palees-text-dark">S/. 79.00</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="5" data-name="Polo Piqué Premium (Amarillo)"
-                                        data-price="79.00"
+                                        data-id="5" data-name="Polo Piqué Premium (Amarillo)" data-price="79.00"
                                         data-image="https://placehold.co/100x120/F8E178/1A237E?text=Polo+Pique">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta 6 - Botón actualizado -->
+                        <!-- Producto 6 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/6">
                                 <img src="https://placehold.co/400x500/1A237E/FFFFFF?text=Polo+con+Bolsillo"
                                     alt="Polo con bolsillo detalle"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/1A237E/FFFFFF?text=Polo+con+Bolsillo';">
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo con Bolsillo</h3> <span
-                                    class="cart-count-product" data-id="6">0</span>
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo con Bolsillo</h3>
                                 <p class="text-sm text-palees-text-medium mb-2">Estilo casual</p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold text-palees-text-dark">S/. 62.00</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="6" data-name="Polo con Bolsillo (Azul)"
-                                        data-price="62.00"
+                                        data-id="6" data-name="Polo con Bolsillo (Azul)" data-price="62.00"
                                         data-image="https://placehold.co/100x120/1A237E/FFFFFF?text=Polo+Bolsillo">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta 7 - Botón actualizado -->
+                        <!-- Producto 7 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/7">
-                                <img src="https://placehold.co/400x500/E5E5E5/1A237E?text=Polo+Gráfico+Minimalista"
-                                    alt="Polo gráfico minimalista"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/E5E5E5/1A237E?text=Polo+Gráfico+Minimalista';">
+                                <img src="https://placehold.co/400x500/FFFFFF/1A237E?text=Polo+Blanco"
+                                    alt="Polo Blanco Básico"
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Gráfico Sol</h3> (<span
-                                    id="cart-count-modal" data-id="7">0</span>)
-                                <p class="text-sm text-palees-text-medium mb-2">Edición Verano</p>
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Blanco Básico</h3>
+                                <p class="text-sm text-palees-text-medium mb-2">Ideal para combinar</p>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold text-palees-text-dark">S/. 69.90</span>
+                                    <span class="text-xl font-bold text-palees-text-dark">S/. 49.90</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="7" data-name="Polo Gráfico Sol (Gris)"
-                                        data-price="69.90"
-                                        data-image="https://placehold.co/100x120/E5E5E5/1A237E?text=Polo+Sol">Añadir</button>
+                                        data-id="7" data-name="Polo Blanco Básico" data-price="49.90"
+                                        data-image="https://placehold.co/100x120/FFFFFF/1A237E?text=Polo+Blanco">Añadir</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tarjeta 8 - Botón actualizado -->
+                        <!-- Producto 8 -->
                         <div
                             class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
                             <a href="/producto/8">
-                                <img src="https://placehold.co/400x500/FF0000/FFFFFF?text=Polo+Oversize+Rojo"
-                                    alt="Polo Oversize Rojo Vibrante"
-                                    class="w-full h-72 object-cover border-b border-palees-bg-gray"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x500/FF0000/FFFFFF?text=Polo+Oversize+Rojo';">
+                                <img src="https://placehold.co/400x500/FF0000/FFFFFF?text=Polo+Rojo"
+                                    alt="Polo Rojo Intenso"
+                                    class="w-full h-72 object-cover border-b border-palees-bg-gray">
                             </a>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-palees-blue">Polo Oversize Vibrante</h3> (<span
-                                    id="cart-count-modal" data-id="8">0</span>)
-                                <p class="text-sm text-palees-text-medium mb-2">Coloración intensa</p>
+                                <h3 class="text-lg font-semibold text-palees-blue">Polo Rojo Premium</h3>
+                                <p class="text-sm text-palees-text-medium mb-2">Edición Limitada</p>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold text-red-600">S/. 65.50</span>
+                                    <span class="text-xl font-bold text-palees-text-dark">S/. 85.00</span>
                                     <button
                                         class="add-to-cart-btn bg-palees-yellow text-palees-blue px-4 py-2 rounded-full font-semibold text-sm hover:bg-yellow-500 transition-all duration-300 active:scale-95 shadow-md"
-                                        title="Añadir al carrito" data-id="8" data-name="Polo Oversize Vibrante (Rojo)"
-                                        data-price="65.50"
+                                        data-id="8" data-name="Polo Rojo Premium" data-price="85.00"
                                         data-image="https://placehold.co/100x120/FF0000/FFFFFF?text=Polo+Rojo">Añadir</button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Paginación -->
@@ -388,123 +365,61 @@
             </div>
         </div>
     </main>
+    <!-- OVERLAY DEL CARRITO -->
+    <div id="cart-modal-overlay" class="fixed inset-0 bg-black opacity-0 hidden transition-opacity duration-300 z-40"
+        onclick="toggleCartModal()"></div>
 
-    <!-- MODAL DEL CARRITO (Panel Lateral Derecho) -->
-    <div id="cart-modal" class="cart-modal">
-        <div class="p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
-            <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito
-            </h2>
-            <button id="close-cart-btn" onclick="toggleCartModal()"
-                class="text-palees-text-dark text-3xl transition hover:text-red-500">&times;</button>
-        </div>
-
-        <p id="empty-cart-message" class="text-center text-palees-text-medium py-10 hidden">
-            El carrito está vacío. ¡Añade tu polo favorito!
-        </p>
-        <div id="cart-items-container" class="cart-modal-body space-y-4">
-            <!-- Los items del carrito se renderizarán aquí -->
-        </div>
-
-        <div class="p-6 border-t border-palees-bg-gray sticky bottom-0 bg-white">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-xl font-bold text-palees-blue">Subtotal:</span>
-                <span id="cart-subtotal" class="text-2xl font-extrabold text-palees-blue">S/ 0.00</span>
+    <!-- MODAL DEL CARRITO (panel derecho) -->
+    <div id="cart-modal"
+        class="cart-modal fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="cart-modal-content flex flex-col h-full">
+            <!-- Cabecera -->
+            <div
+                class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
+                <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
+                <button id="close-cart-btn" class="text-2xl text-palees-text-dark hover:text-red-500">&times;</button>
             </div>
-            <button id="checkout-button"
-                class="w-full bg-palees-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-colors duration-300 active:scale-[0.98] shadow-lg">
-                Finalizar Compra
-            </button>
+
+            <!-- Contenedor productos (tu código) -->
+            <div id="cart-items-container" class="cart-modal-body flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Aquí se renderizan dinámicamente los productos -->
+            </div>
+
+            <!-- Footer (tu código) -->
+            <div class="cart-modal-footer p-6 border-t border-palees-bg-gray">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span>
+                </div>
+                <button id="checkout-button"
+                    class="w-full bg-palees-blue text-white py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900">
+                    Finalizar Compra
+                </button>
+            </div>
         </div>
+    </div>
+
+    <!-- BOTÓN DEL CARRITO -->
+    <div class="fixed top-6 right-6 z-50 md:hidden">
+        <button id="cart-button"
+            class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-lg">
+            <span>Carrito</span>
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-count"
+                class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
     </div>
 
     <!-- FOOTER -->
     <footer class="bg-palees-blue text-palees-gray-light py-10 mt-12 shadow-inner">
         <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-
-            <!-- Columna 1: Logo y Redes -->
-            <div>
-                <h3 class="text-3xl font-dosis font-extrabold text-palees-yellow mb-4">PALEES</h3>
-                <p class="text-sm mb-4">Polos de calidad, diseñados para durar.</p>
-                <div class="flex space-x-4 text-xl">
-                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-palees-yellow transition-colors"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-
-            <!-- Columna 2: Enlaces Rápidos -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Navegación</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="/coleccion" class="hover:text-palees-yellow transition-colors">Comprar</a></li>
-                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Ofertas</a></li>
-                    <li><a href="/cuenta" class="hover:text-palees-yellow transition-colors">Mi Cuenta</a></li>
-                    <li><a href="/contacto" class="hover:text-palees-yellow transition-colors">Contacto</a></li>
-                </ul>
-            </div>
-
-            <!-- Columna 3: Información -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Ayuda</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Tallas</a></li>
-                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Envíos y Entregas</a></li>
-                    <li><a href="#" class="hover:text-palees-yellow transition-colors">Política de Devolución</a></li>
-                    <li><a href="/estado-pedido" class="hover:text-palees-yellow transition-colors">Rastrear Pedido</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex items-center space-x-4 p-3 bg-palees-gray-light rounded-lg shadow-sm">
-                <img src="${item.image}" alt="${item.name}"
-                    class="w-20 h-24 object-cover rounded-md border border-palees-border">
-                <div class="flex-1 min-w-0">
-                    <h4 class="text-palees-blue font-semibold text-base truncate">${item.name}</h4>
-                    <p class="text-sm text-palees-text-medium">Precio: S/ ${Number(item.price).toFixed(2)}</p>
-                    <div class="flex items-center mt-1 space-x-3">
-                        <span class="text-sm font-medium">Cant:</span>
-                        <div class="flex items-center border rounded-full overflow-hidden shadow-sm">
-                            <button class="decrease-btn px-2 py-0.5 text-palees-blue hover:bg-white transition"
-                                data-id="${item.id}">-</button>
-                            <span class="px-2 text-sm font-medium bg-white">${item.quantity}</span>
-                            <button class="increase-btn px-2 py-0.5 text-palees-blue hover:bg-white transition"
-                                data-id="${item.id}">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <span class="text-lg font-bold text-palees-text-dark">S/ ${(Number(item.price) *
-                        item.quantity).toFixed(2)}</span>
-                    <button class="remove-btn block mt-2 text-sm text-red-500 hover:text-red-700 transition"
-                        data-id="${item.id}">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-
-
-            <!-- Columna 4: Contacto -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Contacto</h4>
-                <p class="text-sm">
-                    Email:
-                    <a
-                        href="mailto:anthony.gala@vallegrande.edu.pe?subject=Consulta%20desde%20Palees&body=Hola%20Anthony,%20quisiera%20más%20información...">
-                        palees@gmail.com
-                    </a>
-                <p class="text-sm mt-2">Teléfono: +51 987 654 321</p>
-            </div>
-        </div>
-        <div
-            class="container mx-auto px-6 mt-8 pt-4 border-t border-palees-yellow border-opacity-30 text-center text-sm">
-            <p>&copy; 2025 Palees. Todos los derechos reservados.</p>
+            <!-- ... Footer contenido ... -->
         </div>
     </footer>
 
-
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
     <script src="{{ url_for('static', filename='js/card.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/categories.js') }}"></script>
-    <script src="/static/js/cart.js"></script>
 
 </body>
 
