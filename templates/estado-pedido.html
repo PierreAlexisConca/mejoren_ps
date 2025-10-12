@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreo de Pedido | Palees</title>
+    
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet"> 
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"> 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-palees-gray-light text-palees-text-dark min-h-screen pt-16">
+
+    <header class="bg-white shadow-custom-light sticky w-full top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
+
+            <div class="hidden md:flex space-x-8 lg:space-x-12">
+                <a href="/" class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
+                <a href="/coleccion" class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
+                <a href="/ofertas" class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
+                <a href="/contacto" class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
+                <a href="/cuenta" class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi cuenta</a>
+            </div>
+
+            <div class="flex items-center">
+                <button class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm shadow-custom-light">
+                    <span>carrito</span>
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container mx-auto px-6">
+        
+        <div id="order-details-card" class="card-pedido-status mx-auto max-w-lg mt-12 p-6 md:p-10">
+            
+            <h2 class="text-3xl font-dosis font-bold text-palees-blue mb-6 text-center">
+                Estado de tu Pedido
+            </h2>
+
+            <div class="tracking-steps flex justify-between mb-8">
+                <div id="step-received" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-box-open"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Orden Recibida</p>
+                </div>
+                
+                <div id="step-sent" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Enviado</p>
+                </div>
+
+                <div id="step-delivered" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-home"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Entregado</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-dosis font-bold text-palees-blue border-b pb-2 mb-4">
+                Detalles del envío
+            </h3>
+            <div class="text-sm space-y-2 text-palees-text-dark mb-6">
+                <p><strong>Número de pedido:</strong> <span id="order-number">Cargando...</span></p>
+                <p><strong>Fecha de entrega estimada:</strong> <span id="delivery-date">Cargando...</span></p>
+                <p><strong>Número de rastreo:</strong> <span id="tracking-number">Cargando...</span></p>
+                <p><strong>Dirección de envío:</strong> <span id="shipping-address">Cargando...</span></p>
+            </div>
+
+            <h3 class="text-xl font-dosis font-bold text-palees-blue border-b pb-2 mt-6 mb-4">
+                Productos
+            </h3>
+            <div id="productos-del-pedido-container" class="space-y-4">
+                <p class="text-palees-text-medium italic text-center">Cargando productos del pedido...</p>
+            </div>
+
+            <a href="/ofertas" class="block">
+                <button class="w-full py-3 bg-palees-blue text-white font-bold rounded-lg uppercase hover:bg-blue-700 transition-colors duration-200 mt-6">
+                    Volver a la Tienda
+                </button>
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // Función de formato de moneda (Soles peruanos)
+        const formatCurrency = (amount) => new Intl.NumberFormat('es-PE', { 
+            style: 'currency', 
+            currency: 'PEN' 
+        }).format(amount);
+
+        // Datos de Pedido de EJEMPLO (Simulados)
+        const mockOrderData = {
+            orderNumber: '123456789',
+            estimatedDelivery: '2 de Octubre, 2025',
+            trackingNumber: '123999999999',
+            shippingAddress: 'Jr. Lima 123, Miraflores, Lima.',
+            status: 'Enviado', // Cambia a 'Orden Recibida' o 'Entregado' para probar
+            products: [
+                { id: 3, name: "Polo Piqué Textura", price: 53.94, imgSrc: "/static/images/polo-negro.jpg", quantity: 1 },
+                { id: 4, name: "Polo Oversize", price: 52.40, imgSrc: "/static/images/polo-gris.jpg", quantity: 1 },
+                { id: 2, name: "Polo Gráfico Urbano", price: 55.30, imgSrc: "/static/images/polo-azul.jpg", quantity: 1 }
+            ]
+        };
+
+        /**
+         * Función que renderiza la información del pedido y sus productos.
+         */
+        function renderOrderDetails(order) {
+            // 1. Rellenar los detalles estáticos
+            document.getElementById('order-number').textContent = order.orderNumber;
+            document.getElementById('delivery-date').textContent = order.estimatedDelivery;
+            document.getElementById('tracking-number').textContent = order.trackingNumber;
+            document.getElementById('shipping-address').textContent = order.shippingAddress;
+            
+            // 2. Rellenar la barra de estado
+            updateTrackingBar(order.status);
+
+            // 3. Rellenar la lista de productos
+            const container = document.getElementById('productos-del-pedido-container');
+            if (!container) return;
+
+            // Generamos el HTML usando TEMPLATE LITERALS (comillas invertidas `)
+            const productsHtml = order.products.map(item => {
+                const subtotal = item.price * item.quantity;
+                return `
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                        <div class="flex items-center space-x-3">
+                            <img src="${item.imgSrc || '/static/images/placeholder.jpg'}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg border">
+                            <div>
+                                <p class="font-semibold text-palees-blue text-sm">${item.name}</p>
+                                <p class="text-xs text-palees-text-medium">${formatCurrency(item.price)} c/u</p>
+                            </div>
+                        </div>
+                        <span class="font-bold text-palees-blue">x ${item.quantity}</span>
+                        <span class="font-bold text-palees-blue">${formatCurrency(subtotal)}</span>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = productsHtml;
+        }
+
+
+        /**
+         * Actualiza el estado visual de la barra de progreso.
+         */
+        function updateTrackingBar(status) {
+            const steps = {
+                'Orden Recibida': ['status-received', 'status-inactive', 'status-inactive'],
+                'Enviado': ['status-received', 'status-sent', 'status-inactive'],
+                'Entregado': ['status-received', 'status-sent', 'status-delivered']
+            };
+            
+            const [step1Class, step2Class, step3Class] = steps[status] || steps['Orden Recibida'];
+
+            document.getElementById('step-received').className = `tracking-step ${step1Class}`;
+            document.getElementById('step-sent').className = `tracking-step ${step2Class}`;
+            document.getElementById('step-delivered').className = `tracking-step ${step3Class}`;
+        }
+
+
+        // Ejecución: Carga los detalles del pedido simulado al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            // Solo ejecuta si el contenedor principal de rastreo existe
+            if (document.getElementById('order-details-card')) {
+                renderOrderDetails(mockOrderData);
+            }
+        });
+    </script>
+</body>
+</html>
