@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     // Elementos del DOM
-    const cartButton = document.getElementById('cart-button');
+    const cartButtons = document.querySelectorAll('#cart-button, #cart-button-mobile');
     const cartModal = document.getElementById('cart-modal');
     const closeCartBtn = document.getElementById('close-cart-btn');
-    const cartCount = document.getElementById('cart-count');
+    const cartCounts = document.querySelectorAll('#cart-count, #cart-count-mobile');
     const cartItemsContainer = document.getElementById('cart-items-container');
     const cartSubtotal = document.getElementById('cart-subtotal');
     const checkoutButton = document.getElementById('checkout-button');
@@ -21,11 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Contador del carrito
     const updateCartCount = () => {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = totalItems;
+        cartCounts.forEach(el => el.textContent = totalItems);
     };
 
     // Calcular subtotal
-    const calculateSubtotal = () => cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const calculateSubtotal = () =>
+        cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     // Renderizar items en modal
     const renderCartItems = () => {
@@ -53,10 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="flex items-center gap-2">
                     <button class="quantity-btn decrease-quantity-btn" data-id="${item.id}">−</button>
-<span>${item.quantity}</span>
-<button class="quantity-btn increase-quantity-btn" data-id="${item.id}">+</button>
-<button class="cart-item-remove-btn" data-id="${item.id}">&times;</button>
-
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn increase-quantity-btn" data-id="${item.id}">+</button>
+                    <button class="cart-item-remove-btn" data-id="${item.id}">&times;</button>
                 </div>
             `;
             cartItemsContainer.appendChild(itemElement);
@@ -66,19 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Listeners dinámicos
         document.querySelectorAll('.decrease-quantity-btn').forEach(btn => {
-            btn.addEventListener('click', e => updateQuantity(Number(e.target.dataset.id), -1));
+            btn.addEventListener('click', e => updateQuantity(e.target.dataset.id, -1));
         });
         document.querySelectorAll('.increase-quantity-btn').forEach(btn => {
-            btn.addEventListener('click', e => updateQuantity(Number(e.target.dataset.id), 1));
+            btn.addEventListener('click', e => updateQuantity(e.target.dataset.id, 1));
         });
         document.querySelectorAll('.cart-item-remove-btn').forEach(btn => {
-            btn.addEventListener('click', e => removeFromCart(Number(e.target.dataset.id)));
+            btn.addEventListener('click', e => removeFromCart(e.target.dataset.id));
         });
     };
 
     // Actualizar cantidad
     const updateQuantity = (productId, change) => {
-        const item = cart.find(i => i.id === productId);
+        const item = cart.find(i => i.id == productId);
         if (!item) return;
 
         item.quantity += change;
@@ -91,14 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Añadir producto (con depuración)
+    // Añadir producto
     const addToCart = (product) => {
-        console.log('Producto añadido al carrito:', product); // <-- Depuración
-        const existing = cart.find(item => item.id === Number(product.id));
+        const existing = cart.find(item => item.id == product.id);
         if (existing) {
             existing.quantity += 1;
         } else {
-            cart.push({ ...product, quantity: 1, id: Number(product.id) });
+            cart.push({ ...product, quantity: 1 });
         }
         saveCart();
         updateCartCount();
@@ -107,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Eliminar producto
     const removeFromCart = (productId) => {
-        cart = cart.filter(item => item.id !== productId);
+        cart = cart.filter(item => item.id != productId);
         saveCart();
         updateCartCount();
         renderCartItems();
@@ -118,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cartModal.classList.toggle('open');
     };
 
-    // Eventos globales
-    if (cartButton) cartButton.addEventListener('click', toggleCartModal);
+    // Eventos
+    cartButtons.forEach(btn => btn.addEventListener('click', toggleCartModal));
     if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCartModal);
     if (cartModal) {
         cartModal.addEventListener('click', e => {
@@ -131,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', e => {
             const product = {
-                id: Number(e.currentTarget.dataset.id),
+                id: e.currentTarget.dataset.id,
                 name: e.currentTarget.dataset.name,
                 price: Number(e.currentTarget.dataset.price),
                 image: e.currentTarget.dataset.image
@@ -166,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     renderCartItems();
 
-    // --- Sidebar / colección ---
+    // Sidebar categorías (opcional)
     const filterToggle = document.getElementById('filter-toggle');
     if (filterToggle) {
         filterToggle.addEventListener('click', () => {
@@ -175,3 +174,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+window.toggleCart = () => {
+    document.getElementById('cart-overlay').classList.toggle('hidden');
+    document.getElementById('cart-panel').classList.toggle('translate-x-full');
+};
+
+window.checkout = () => {
+    if (window.cart.getItems().length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+    }
+    window.location.href = '/checkout';
+};

@@ -274,10 +274,12 @@ nav .nav-link:hover::after {
     background-color: #F9FAFB;
     /* gris muy claro, elegante */
 }
+
 .bg-palees-blue {
     background-color: #1A237E;
     /* azul intenso */
 }
+
 .bg-palees-yellow {
     background-color: #F8E178;
 }
@@ -293,14 +295,17 @@ nav .nav-link:hover::after {
     color: #1A237E;
     /* azul intenso */
 }
+
 .text-palees-text-dark {
     color: #333333;
     /* gris oscuro legible */
 }
+
 .text-palees-text-medium {
     color: #666666;
     /* gris medio, secundario */
 }
+
 .text-palees-yellow {
     color: #F8E178;
     /* amarillo pastel */
@@ -317,14 +322,17 @@ nav .nav-link:hover::after {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .add-to-cart-btn:hover {
     background-color: #F8E178;
     color: #1A237E;
 }
+
 /* Botones del carrito */
 .cart-btn {
     background-color: #1A237E;
-    color: #1A237E; /* El texto en el botón del header lo da el Tailwind */
+    color: #F8E178;
+    /* El texto en el botón del header lo da el Tailwind */
     border: none;
     border-radius: 12px;
     padding: 0.5rem 1rem;
@@ -332,9 +340,10 @@ nav .nav-link:hover::after {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .cart-btn:hover {
-    background-color: #1A237E;
-    color: #F8E178;
+    background-color: #F8E178;
+    color: #1A237E;
 }
 
 /* Contenedor del carrito */
@@ -343,7 +352,7 @@ nav .nav-link:hover::after {
     border: 2px solid #F8E178;
     border-radius: 16px;
     padding: 1rem;
-    color: #333333; 
+    color: #333333;
 }
 
 .cart-modal-header h2 {
@@ -352,44 +361,52 @@ nav .nav-link:hover::after {
 }
 
 /* FOOTER (Consolidado) */
-footer, .footer {
+footer,
+.footer {
     background-color: #1A237E;
     color: #FFFFFF;
     padding: 3rem 2rem;
-    text-align: left; /* Generalmente se alinea a la izquierda en una estructura de grid */
+    text-align: left;
+    /* Generalmente se alinea a la izquierda en una estructura de grid */
 }
 
-footer a, .footer a {
+footer a,
+.footer a {
     color: #FFFFFF;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
-footer a:hover, .footer a:hover {
+footer a:hover,
+.footer a:hover {
     color: #FFD700;
 }
 
-footer h4, .footer h4 {
+footer h4,
+.footer h4 {
     color: #FFFFFF;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
 /* Iconos sociales */
-footer .social-icon, .footer .social-icon {
+footer .social-icon,
+.footer .social-icon {
     color: #FFFFFF;
     font-size: 1.5rem;
     margin: 0 0.5rem;
     transition: color 0.3s ease;
 }
 
-footer .social-icon:hover, .footer .social-icon:hover {
+footer .social-icon:hover,
+.footer .social-icon:hover {
     color: #FFD700;
 }
 
 /* Texto de copyright */
-footer .text-sm, .footer .text-sm {
+footer .text-sm,
+.footer .text-sm {
     color: #FFFFFF;
 }
 
@@ -401,7 +418,7 @@ footer .text-sm, .footer .text-sm {
 /* --- Panel Lateral: #cart-panel --- */
 #cart-panel {
     /* Estado inicial: Fuera de pantalla. */
-    transition: transform 0.3s ease-in-out; 
+    transition: transform 0.3s ease-in-out;
 }
 
 /* Estado ABIERTO (Clase añadida por products.js) */
@@ -428,7 +445,8 @@ footer .text-sm, .footer .text-sm {
 /* Contenedor principal de la tarjeta de estado del pedido */
 .card-pedido-status {
     background-color: white;
-    border-radius: 1rem; /* 16px */
+    border-radius: 1rem;
+    /* 16px */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 2rem;
 }
@@ -451,7 +469,8 @@ footer .text-sm, .footer .text-sm {
     left: 10%;
     right: 10%;
     height: 3px;
-    background: #E0E0E0; /* Gris claro de la línea */
+    background: #E0E0E0;
+    /* Gris claro de la línea */
     z-index: 1;
 }
 
@@ -476,17 +495,20 @@ footer .text-sm, .footer .text-sm {
 
 /* Estados de la barra de progreso */
 .status-received .tracking-icon {
-    background-color: #1A237E; /* palees-blue */
+    background-color: #1A237E;
+    /* palees-blue */
     color: white;
 }
 
 .status-sent .tracking-icon {
-    background-color: #F8E178; /* palees-yellow */
+    background-color: #F8E178;
+    /* palees-yellow */
     color: #1A237E;
 }
 
 .status-delivered .tracking-icon {
-    background-color: #4CAF50; /* Verde de entrega (puedes cambiarlo) */
+    background-color: #4CAF50;
+    /* Verde de entrega (puedes cambiarlo) */
     color: white;
 }
 
@@ -494,4 +516,25 @@ footer .text-sm, .footer .text-sm {
 .status-inactive .tracking-icon {
     background-color: #E0E0E0;
     color: #666666;
+}
+
+/* --- Carrito (modal animado) --- */
+#cart-modal {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+}
+
+#cart-modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+.header-logo {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 800;
+    color: #1A237E; /* palees-blue */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }

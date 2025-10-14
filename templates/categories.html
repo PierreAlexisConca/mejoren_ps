@@ -4,21 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colección | Polos de Algodón Pima - Palees</title>
+    <title>Palees - Tienda de Ropa</title>
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-
-    <!-- CSS -->
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/categories.css') }}" rel="stylesheet">
-
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
 </head>
 
 <body class="bg-palees-gray-light text-palees-text-dark">
@@ -26,30 +20,33 @@
     <!-- HEADER -->
     <header class="bg-white shadow-custom-light fixed w-full z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="/"
-                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
-
-            <!-- Navegación Desktop -->
+            <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
             <div class="hidden md:flex space-x-8 lg:space-x-12">
-                <a href="/"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
-                <a href="/coleccion"
-                    class="nav-link text-palees-blue hover:text-palees-yellow font-medium transition-colors duration-300 border-b-2 border-palees-yellow">Categorías</a>
-                <a href="/ofertas"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
-                <a href="/contacto"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
-                <a href="/cuenta"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi
-                    cuenta</a>
+                <a href="{{ url_for('index') }}"
+                    class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                    Inicio
+                </a>
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link {% if request.path == url_for('coleccion') %}active{% endif %}">
+                    Categorías
+                </a>
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link {% if request.path == url_for('ofertas') %}active{% endif %}">
+                    Ofertas
+                </a>
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link {% if request.path == url_for('contacto') %}active{% endif %}">
+                    Contáctanos
+                </a>
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link {% if request.path == url_for('cuenta') %}active{% endif %}">
+                    Mi cuenta
+                </a>
             </div>
-
-            <!-- Botón Carrito -->
             <div class="flex items-center">
-                <button id="cart-button" onclick="toggleCartModal()"
-                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-custom-light">
-                    <span>carrito</span>
+                <button id="cart-button"
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
+                    <span>Carrito</span>
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span id="cart-count"
                         class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -377,7 +374,7 @@
             <div
                 class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
                 <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
-                <button id="close-cart-btn" class="text-2xl text-palees-text-dark hover:text-red-500">&times;</button>
+                <button id="close-cart-btn" class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
             </div>
 
             <!-- Contenedor productos (tu código) -->
@@ -410,16 +407,12 @@
         </button>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-palees-blue text-palees-gray-light py-10 mt-12 shadow-inner">
-        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- ... Footer contenido ... -->
-        </div>
-    </footer>
+
+{% include 'footer.html' %}
 
     <!-- Scripts -->
-    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/card.js') }}"></script>
+    <script src="/static/js/cart.js"></script>
+    <script src="/static/js/card.js"></script>
 
 </body>
 

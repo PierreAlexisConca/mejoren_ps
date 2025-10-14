@@ -1,18 +1,16 @@
-// card.js
 document.addEventListener('DOMContentLoaded', () => {
-    const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
 
             const productCard = button.closest('.product-card');
-            const productName = productCard.querySelector('h3').textContent;
-            const productPrice = productCard.querySelector('.price-new')
-                ? parseFloat(productCard.querySelector('.price-new').textContent.replace('S/', '').trim())
-                : parseFloat(productCard.querySelector('.price-old').textContent.replace('S/', '').trim());
+            const productName = productCard.querySelector('h3').textContent.trim();
+            const productPriceElement = productCard.querySelector('.price-new') || productCard.querySelector('.price-old');
+            const productPrice = parseFloat(productPriceElement.textContent.replace('S/', '').trim());
             const productImage = productCard.querySelector('img').src;
-            const productId = productCard.dataset.id || crypto.randomUUID();
+            const productId = productCard.dataset.id || Date.now();
 
             const productData = {
                 id: productId,
@@ -21,17 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 image: productImage
             };
 
-            console.log('Producto añadido:', productData);
+            console.log('🛍️ Producto añadido:', productData);
 
-            // ✅ Aquí llamas a la función global del carrito
-            addToCart(productData);
-            updateCartDisplay(); // <- Muy importante para que se vea en vivo
+            // Llamamos al método del carrito expuesto en window
+            if (window.cart && typeof window.cart.addToCart === 'function') {
+                window.cart.addToCart(productData);
+            } else {
+                console.error('❌ El carrito no está disponible o no fue cargado antes de card.js');
+            }
 
-            // 🔔 Efecto visual (opcional)
-            button.style.backgroundColor = '#4CAF50'; // Verde
+            // Efecto visual
+            button.style.backgroundColor = '#FFD966';
             button.textContent = 'Añadido!';
             setTimeout(() => {
-                button.style.backgroundColor = 'var(--primary-color)';
+                button.style.backgroundColor = '';
                 button.textContent = 'Añadir al carrito';
             }, 1500);
         });
