@@ -283,7 +283,8 @@
             <div
                 class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
                 <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
-                <button id="close-cart-btn" class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
+                <button id="close-cart-btn"
+                    class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
             </div>
             <!-- Contenedor productos -->
             <div id="cart-items-container" class="cart-modal-body flex-1 overflow-y-auto p-6 space-y-4">
@@ -304,15 +305,6 @@
         </div>
     </div>
 
-    <!-- BOTÓN DEL CARRITO -->
-    <div class="fixed top-6 right-6 z-50 md:hidden">
-        <button id="cart-button-mobile" class="cart-btn ...">
-            <span>Carrito</span>
-            <i class="fas fa-shopping-cart text-lg"></i>
-            <span id="cart-count-mobile" class="...">0</span>
-        </button>
-
-    </div>
     {% include 'footer.html' %}
     <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>

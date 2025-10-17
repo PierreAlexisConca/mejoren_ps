@@ -112,20 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCartItems();
     };
 
-    // Abrir / cerrar modal
-    const toggleCartModal = () => {
-        cartModal.classList.toggle('open');
-    };
-
-    // Eventos
-    cartButtons.forEach(btn => btn.addEventListener('click', toggleCartModal));
-    if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCartModal);
-    if (cartModal) {
-        cartModal.addEventListener('click', e => {
-            if (e.target === cartModal) toggleCartModal();
-        });
-    }
-
     // Botones de añadir al carrito
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', e => {
@@ -165,6 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     renderCartItems();
 
+    // 👉 Fusión: forzar actualización del contador desde localStorage (compatibilidad contacto.html)
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.querySelectorAll('#cart-count, #cart-count-mobile')
+        .forEach(el => el.textContent = totalItems);
+
     // Sidebar categorías (opcional)
     const filterToggle = document.getElementById('filter-toggle');
     if (filterToggle) {
@@ -173,7 +164,55 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('sidebar-overlay').classList.toggle('hidden');
         });
     }
+
+    // Función abrir/cerrar carrito con overlay
+    const cartOverlay = document.getElementById('cart-modal-overlay');
+    const openCart = () => {
+        if (!cartModal || !cartOverlay) return;
+        cartOverlay.classList.remove('hidden', 'opacity-0');
+        cartModal.classList.remove('translate-x-full');
+        document.body.classList.add('overflow-hidden');
+    };
+
+    const closeCart = () => {
+        if (!cartModal || !cartOverlay) return;
+        cartModal.classList.add('translate-x-full');
+        cartOverlay.classList.add('opacity-0');
+        setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    window.toggleCartModal = () => {
+        if (cartModal.classList.contains('translate-x-full')) {
+            openCart();
+        } else {
+            closeCart();
+        }
+    };
+
+    // Botones del carrito: abrir modal
+    cartButtons.forEach(btn => btn.addEventListener('click', () => {
+        cartModal.classList.add('open');
+    }));
+
+    // Botón cerrar modal
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.classList.remove('open');
+        });
+    }
+
+    // Click en overlay para cerrar
+    if (cartModal) {
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.remove('open');
+            }
+        });
+    }
 });
+
+// Funciones globales adicionales
 window.toggleCart = () => {
     document.getElementById('cart-overlay').classList.toggle('hidden');
     document.getElementById('cart-panel').classList.toggle('translate-x-full');

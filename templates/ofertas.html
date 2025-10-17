@@ -16,41 +16,41 @@
     <!-- Tailwind y estilos -->
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
 
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="bg-palees-gray-light text-palees-text-dark overflow-x-hidden">
-
-    <!-- Overlay oscuro -->
-    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 hidden"
-        onclick="window.toggleCart()"></div>
-
-    <!-- Header -->
-    <header class="bg-white shadow-custom-light sticky w-full top-0 z-50">
+    <header class="bg-white shadow-custom-light fixed w-full z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/"
-                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
-
+            <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
             <div class="hidden md:flex space-x-8 lg:space-x-12">
-                <a href="/"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors">Inicio</a>
-                <a href="/coleccion"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors">Categorías</a>
-                <a href="/ofertas"
-                    class="nav-link active text-palees-text-dark hover:text-palees-yellow font-medium transition-colors">Ofertas</a>
-                <a href="/contacto"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors">Contactanos</a>
-                <a href="/cuenta"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors">Mi
-                    cuenta</a>
+                <a href="{{ url_for('index') }}"
+                    class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                    Inicio
+                </a>
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link {% if request.path == url_for('coleccion') %}active{% endif %}">
+                    Categorías
+                </a>
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link {% if request.path == url_for('ofertas') %}active{% endif %}">
+                    Ofertas
+                </a>
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link {% if request.path == url_for('contacto') %}active{% endif %}">
+                    Contáctanos
+                </a>
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link {% if request.path == url_for('cuenta') %}active{% endif %}">
+                    Mi cuenta
+                </a>
             </div>
-
-            <!-- Botón Carrito -->
             <div class="flex items-center">
                 <button id="cart-button"
-                    class="bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-custom-light active:scale-95">
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
                     <span>Carrito</span>
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span id="cart-count"
@@ -101,99 +101,47 @@
             </section>
         </div>
     </main>
+    <!-- OVERLAY DEL CARRITO -->
+    <div id="cart-modal-overlay" class="fixed inset-0 bg-black opacity-0 hidden transition-opacity duration-300 z-40"
+        onclick="toggleCartModal()"></div>
+
+    <!-- MODAL DEL CARRITO (panel derecho) -->
+    <div id="cart-modal"
+        class="cart-modal fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="cart-modal-content flex flex-col h-full">
+            <!-- Cabecera -->
+            <div
+                class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
+                <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
+                <button id="close-cart-btn"
+                    class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
+            </div>
+            <!-- Contenedor productos -->
+            <div id="cart-items-container" class="cart-modal-body flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Productos renderizados dinámicamente -->
+            </div>
+
+            <!-- Footer del modal -->
+            <div class="cart-modal-footer p-6 border-t border-palees-bg-gray">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span>
+                </div>
+                <button id="checkout-button"
+                    class="w-full bg-palees-blue text-white py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Footer -->
-    <footer class="bg-palees-blue text-palees-gray-light py-10 mt-12 shadow-inner">
-        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-                <h3 class="text-3xl font-dosis font-extrabold text-palees-yellow mb-4">PALEES</h3>
-                <p class="text-sm mb-4">Polos de calidad, diseñados para durar.</p>
-                <div class="flex space-x-4 text-xl">
-                    <a href="#" class="hover:text-palees-yellow"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="hover:text-palees-yellow"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-palees-yellow"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Navegación</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="/coleccion" class="hover:text-palees-yellow">Comprar</a></li>
-                    <li><a href="/ofertas" class="hover:text-palees-yellow">Ofertas</a></li>
-                    <li><a href="/cuenta" class="hover:text-palees-yellow">Mi Cuenta</a></li>
-                    <li><a href="/contacto" class="hover:text-palees-yellow">Contacto</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Ayuda</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-palees-yellow">Tallas</a></li>
-                    <li><a href="#" class="hover:text-palees-yellow">Envíos y Entregas</a></li>
-                    <li><a href="#" class="hover:text-palees-yellow">Política de Devolución</a></li>
-                    <li><a href="/estado-pedido" class="hover:text-palees-yellow">Rastrear Pedido</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-palees-yellow pb-1">Contacto</h4>
-                Email:
-                <a href="mailto:palees@gmail.com" class="hover:text-palees-yellow">palees@gmail.com</a>
-                <p class="text-sm mt-2">Teléfono: +51 987 654 321</p>
-            </div>
-        </div>
-        <div
-            class="container mx-auto px-6 mt-8 pt-4 border-t border-palees-yellow border-opacity-30 text-center text-sm">
-            <p>&copy; 2025 Palees. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Carrito lateral -->
-    <aside id="cart-panel"
-        class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl z-50 transition-transform duration-300 transform translate-x-full flex flex-col">
-
-        <div class="p-6 border-b border-palees-gray-light flex justify-between items-center bg-palees-yellow">
-            <h2 class="text-2xl font-dosis font-bold text-palees-blue">
-                Tu Carrito <i class="fas fa-shopping-cart ml-2"></i>
-            </h2>
-            <button onclick="window.toggleCart()" class="text-palees-blue hover:text-palees-red transition-colors">
-                <i class="fas fa-times text-2xl"></i>
-            </button>
-        </div>
-
-        <div id="cart-message-box" class="p-4 bg-palees-yellow text-palees-blue font-semibold hidden text-center"></div>
-
-        <div id="cart-items-list" class="flex-grow overflow-y-auto p-6 space-y-4">
-            <p class="text-center text-palees-text-medium italic pt-4">El carrito está vacío.</p>
-        </div>
-
-        <div class="p-6 border-t border-palees-gray-light bg-palees-gray-light">
-            <div class="flex justify-between items-center text-xl font-bold mb-4">
-                <span class="text-palees-blue">Subtotal:</span>
-                <span id="cart-total" class="text-palees-blue">S/. 0.00</span>
-            </div>
-            <button onclick="window.checkout()"
-                class="w-full py-3 bg-palees-red text-white font-bold rounded-lg uppercase hover:bg-red-700 transition-colors duration-200 active:scale-[0.99] shadow-md">
-                Finalizar Compra
-            </button>
-        </div>
-    </aside>
+    {% include 'footer.html' %}
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/products.js') }}"></script>
-
-    <!-- Fallback funciones si no están en cart.js -->
-    <script>
-        window.toggleCart = window.toggleCart || function () {
-            const panel = document.getElementById('cart-panel');
-            const overlay = document.getElementById('cart-overlay');
-            panel.classList.toggle('translate-x-full');
-            overlay.classList.toggle('hidden');
-        };
-
-        window.checkout = window.checkout || function () {
-            window.location.href = '/checkout';
-        };
-    </script>
-
+    <script src="{{ url_for('static', filename='js/card.js') }}"></script>
 </body>
 
 </html>
