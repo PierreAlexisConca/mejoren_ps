@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreo de Pedido | Palees</title>
+
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-palees-gray-light text-palees-text-dark min-h-screen pt-16">
+
+    <header class="bg-white shadow-custom-light sticky w-full top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/"
+                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
+
+            <div class="hidden md:flex space-x-8 lg:space-x-12">
+                <a href="/"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
+                <a href="/coleccion"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
+                <a href="/ofertas"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
+                <a href="/contacto"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
+                <a href="/cuenta"
+                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi
+                    cuenta</a>
+            </div>
+
+            <div class="flex items-center">
+                <button
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm shadow-custom-light">
+                    <span>carrito</span>
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container mx-auto px-6">
+
+        <div id="order-details-card" class="card-pedido-status mx-auto max-w-lg mt-12 p-6 md:p-10">
+
+            <h2 class="text-3xl font-dosis font-bold text-palees-blue mb-6 text-center">
+                Estado de tu Pedido
+            </h2>
+
+            <div class="tracking-steps flex justify-between mb-8">
+                <div id="step-received" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-box-open"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Orden Recibida</p>
+                </div>
+
+                <div id="step-sent" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Enviado</p>
+                </div>
+
+                <div id="step-delivered" class="tracking-step status-inactive">
+                    <div class="tracking-icon"><i class="fas fa-home"></i></div>
+                    <p class="font-semibold text-palees-text-medium text-sm">Entregado</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-dosis font-bold text-palees-blue border-b pb-2 mb-4">
+                Detalles del envío
+            </h3>
+            <div class="text-sm space-y-2 text-palees-text-dark mb-6">
+                <p><strong>Número de pedido:</strong> <span id="order-number">Cargando...</span></p>
+                <p><strong>Fecha de entrega estimada:</strong> <span id="delivery-date">Cargando...</span></p>
+                <p><strong>Número de rastreo:</strong> <span id="tracking-number">Cargando...</span></p>
+                <p><strong>Dirección de envío:</strong> <span id="shipping-address">Cargando...</span></p>
+            </div>
+
+            <h3 class="text-xl font-dosis font-bold text-palees-blue border-b pb-2 mt-6 mb-4">
+                Productos
+            </h3>
+            <div id="productos-del-pedido-container" class="space-y-4">
+                <p class="text-palees-text-medium italic text-center">Cargando productos del pedido...</p>
+            </div>
+
+            <a href="/ofertas" class="block">
+                <button
+                    class="w-full py-3 bg-palees-blue text-white font-bold rounded-lg uppercase hover:bg-blue-700 transition-colors duration-200 mt-6">
+                    Volver a la Tienda
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/pedido.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+
+</html>

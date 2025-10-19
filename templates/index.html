@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palees - Tienda de Ropa</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+</head>
+
+<body>
+    <header class="bg-white shadow-custom-light fixed w-full z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
+            <div class="hidden md:flex space-x-8 lg:space-x-12">
+                <a href="{{ url_for('index') }}"
+                    class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                    Inicio
+                </a>
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link {% if request.path == url_for('coleccion') %}active{% endif %}">
+                    Categorías
+                </a>
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link {% if request.path == url_for('ofertas') %}active{% endif %}">
+                    Ofertas
+                </a>
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link {% if request.path == url_for('contacto') %}active{% endif %}">
+                    Contáctanos
+                </a>
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link {% if request.path == url_for('cuenta') %}active{% endif %}">
+                    Mi cuenta
+                </a>
+            </div>
+            <div class="flex items-center">
+                <button id="cart-button"
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
+                    <span>Carrito</span>
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count"
+                        class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-20">
+        <div class="carousel-container" id="mainCarousel">
+            <div class="carousel-track" id="carouselTrack"></div>
+            <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
+            <i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-nav-btn next" onclick="carousel.next()"><i
+                    class="fas fa-chevron-right"></i></button>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+        </div>
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-dosis font-bold text-center text-palees-blue mb-12">Nuestros Favoritos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden">
+                        <img src="{{ url_for('static', filename='image/CamisaLino.jpeg') }}" alt="Camisa de Lino"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Camisa de Lino Azul
+                            </h3>
+                            <p class="text-palees-text-medium text-sm mb-4">Ligera y cómoda, ideal para el verano.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-3xl font-bold text-palees-blue">S/ 229.90</span>
+                                <button
+                                    class="add-to-cart-btn bg-palees-yellow text-palees-blue px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                                    data-id="01" data-name="Camisa de Lino Azul" data-price="229.90"
+                                    data-image="{{ url_for('static', filename='image/CamisaLino.jpeg') }}">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden">
+                        <img src="{{ url_for('static', filename='image/PantalonesCargo.jpeg') }}" alt="Pantalones Cargo"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Pantalones Cargo
+                                Beige</h3>
+                            <p class="text-palees-text-medium text-sm mb-4">Estilo urbano con máxima comodidad.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-3xl font-bold text-palees-blue">S/ 279.90</span>
+                                <button
+                                    class="add-to-cart-btn bg-palees-yellow text-palees-blue px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                                    data-id="02" data-name="Pantalones Cargo Beige" data-price="279.90"
+                                    data-image="{{ url_for('static', filename='image/PantalonesCargo.jpeg') }}">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden">
+                        <img src="{{ url_for('static', filename='image/VestidoFluido.jpeg') }}" alt="Vestido Fluido"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-dosis text-2xl font-semibold text-palees-blue mb-2">
+                                Vestido Fluido
+                                Estampado</h3>
+                            <p class="text-palees-text-medium text-sm mb-4">Elegancia y frescura para tu día.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-3xl font-bold text-palees-blue">S/ 339.90</span>
+                                <button
+                                    class="add-to-cart-btn bg-palees-yellow text-palees-blue px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                                    data-id="3" data-name="Vestido Fluido Estampado" data-price="339.90"
+                                    data-image="{{ url_for('static', filename='image/VestidoFluido.jpeg') }}">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- SECCIÓN DE CARACTERÍSTICAS / PROPUESTA DE VALOR -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">¿Por qué elegir Palees?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+                <!-- Característica 1: Algodón Pima -->
+                <div
+                    class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-seedling text-4xl text-palees-yellow mb-4"></i>
+                    <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Algodón Pima Peruano</h3>
+                    <p class="text-palees-text-medium text-sm">El algodón más fino del mundo. Ultra suave, ligero y
+                        resistente al pilling.</p>
+                </div>
+
+                <!-- Característica 2: Colores Duraderos -->
+                <div
+                    class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-palette text-4xl text-palees-yellow mb-4"></i>
+                    <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Colores Vivos</h3>
+                    <p class="text-palees-text-medium text-sm">Teñido reactivo para colores que resisten el paso del
+                        tiempo y los lavados.</p>
+                </div>
+
+                <!-- Característica 3: Envío Rápido -->
+                <div
+                    class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-shipping-fast text-4xl text-palees-yellow mb-4"></i>
+                    <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Envío Express</h3>
+                    <p class="text-palees-text-medium text-sm">Recibe tu pedido en 24-48 horas. Rápido y seguro a todo
+                        el país.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE CATEGORÍAS DESTACADAS -->
+    <section id="featured" class="py-16 bg-palees-bg-gray">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">Explora nuestras categorías
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Categoría 1: Polos Clásicos -->
+                <div class="relative group overflow-hidden rounded-xl shadow-custom-medium">
+                    <img src="/static/image/ChaquetaCuero.jpeg" alt="Polos de corte clásico y colores sólidos"
+                        class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/1A237E/F8E178?text=POLOS+CLÁSICOS';">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                        <a href="/coleccion?cat=clasicos"
+                            class="text-white text-2xl font-dosis font-bold tracking-wider border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-palees-blue transition-colors duration-300">
+                            Clásicos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Categoría 2: Diseño Gráfico -->
+                <div class="relative group overflow-hidden rounded-xl shadow-custom-medium">
+                    <img src="/static/image/PolosGraficos.jpeg" alt="Polos con diseños gráficos modernos y llamativos"
+                        class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/F8E178/1A237E?text=POLOS+GRÁFICOS';">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                        <a href="/coleccion?cat=graficos"
+                            class="text-white text-2xl font-dosis font-bold tracking-wider border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-palees-blue transition-colors duration-300">
+                            Gráficos
+                        </a>
+                    </div>
+                </div>
+                <!-- Categoría 3: Tendencia Oversize -->
+                <div class="relative group overflow-hidden rounded-xl shadow-custom-medium">
+                    <img src="{{ url_for('static', filename='image/ChaquetaCuero.jpeg') }}"
+                        alt="Polos de corte holgado y estilo oversize"
+                        class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/1A237E/F8E178?text=POLOS%20OVERSIZE';">
+
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                        <a href="/coleccion?cat=oversize"
+                            class="text-white text-2xl font-dosis font-bold tracking-wider border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-palees-blue transition-colors duration-300">
+                            Oversize
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TESTIMONIOS -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">
+                Lo que dicen nuestros clientes
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- Columna Izquierda -->
+                <div class="flex flex-col gap-8">
+                    <!-- Comentario 1 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
+                        <p class="text-gray-700 italic">
+                            “La mejor calidad de polos que he comprado en años! La tela es increíblemente suave y no
+                            pierde la forma después de lavar. Definitivamente volveré a comprar.”
+                        </p>
+                        <h4 class="mt-3 font-semibold text-palees-blue">— Andrea G.</h4>
+                        <span class="text-gray-400 text-xs">Compradora verificada</span>
+                    </div>
+
+                    <!-- Comentario 2 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
+                        <p class="text-gray-700 italic">
+                            “El envío fue rapidísimo y la atención al cliente excelente. Los polos llegaron perfectos y
+                            exactamente como en la foto. ¡Recomendados!”
+                        </p>
+                        <h4 class="mt-3 font-semibold text-palees-blue">— Carlos M.</h4>
+                        <span class="text-gray-400 text-xs">Comprador verificado</span>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha -->
+                <div class="flex flex-col gap-8">
+                    <!-- Comentario 3 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
+                        <p class="text-gray-700 italic">
+                            “Muy satisfecho con la compra. La calidad de los materiales es excelente y los diseños son
+                            tal como esperaba. Volveré a comprar sin dudarlo.”
+                        </p>
+                        <h4 class="mt-3 font-semibold text-palees-blue">— Mariana R.</h4>
+                        <span class="text-gray-400 text-xs">Compradora verificada</span>
+                    </div>
+
+                    <!-- Comentario 4 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
+                        <p class="text-gray-700 italic">
+                            “Excelente experiencia de compra. Los productos llegaron antes de lo esperado y la calidad
+                            superó mis expectativas. ¡Sin duda volveré a comprar en PALEES!”
+                        </p>
+                        <h4 class="mt-3 font-semibold text-palees-blue">— José L.</h4>
+                        <span class="text-gray-400 text-xs">Comprador verificado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER DE CTA (Call To Action) -->
+    <section class="bg-palees-blue py-16 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-dosis font-extrabold text-palees-yellow mb-4">¡Únete a la Familia
+                Palees!</h2>
+            <p class="text-xl text-white opacity-90 mb-8">No te pierdas de nuestras ofertas exclusivas y novedades.</p>
+            <a href="/cuenta"
+                class="bg-palees-yellow text-palees-blue py-4 px-10 rounded-full font-bold text-lg hover:bg-yellow-400 transition duration-300 shadow-xl transform hover:scale-105 inline-block">
+                Suscríbete Ahora
+            </a>
+        </div>
+    </section>
+
+    </main>
+    <!-- OVERLAY DEL CARRITO -->
+    <div id="cart-modal-overlay" class="fixed inset-0 bg-black opacity-0 hidden transition-opacity duration-300 z-40"
+        onclick="toggleCartModal()"></div>
+
+    <!-- MODAL DEL CARRITO (panel derecho) -->
+    <div id="cart-modal"
+        class="cart-modal fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="cart-modal-content flex flex-col h-full">
+            <!-- Cabecera -->
+            <div
+                class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
+                <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
+                <button id="close-cart-btn"
+                    class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
+            </div>
+            <!-- Contenedor productos -->
+            <div id="cart-items-container" class="cart-modal-body flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Productos renderizados dinámicamente -->
+            </div>
+
+            <!-- Footer del modal -->
+            <div class="cart-modal-footer p-6 border-t border-palees-bg-gray">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-lg font-bold">S/ 0.00</span>
+                </div>
+                <button id="checkout-button"
+                    class="w-full bg-palees-blue text-white py-3 rounded-lg mt-4 font-semibold hover:bg-blue-900">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+        <!-- BOTÓN DE MODO OSCURO -->
+        <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+            <button id="modoBtn"
+                style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
+                🌙 Modo Oscuro
+            </button>
+        </div>
+        
+        <script>
+            const boton = document.getElementById('modoBtn');
+            boton.addEventListener('click', () => {
+                document.body.classList.toggle('modo-oscuro');
+                if (document.body.classList.contains('modo-oscuro')) {
+                    boton.textContent = '☀️ Modo Claro';
+                } else {
+                    boton.textContent = '🌙 Modo Oscuro';
+                }
+            });
+        </script>
+        
+        <style>
+            .modo-oscuro {
+                background-color: #121212 !important;
+                color: #f5f5f5 !important;
+            }
+        
+            .modo-oscuro header,
+            .modo-oscuro section,
+            .modo-oscuro footer {
+                background-color: #1e1e1e !important;
+                color: #e0e0e0 !important;
+            }
+        </style>
+
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+
+</html>
