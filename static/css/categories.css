@@ -1,0 +1,83 @@
+/* CSS para gestionar el sidebar de filtros (izquierdo) categorias. css */
+.sidebar-overlay {
+    z-index: 40;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 50;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* CSS para gestionar el modal del carrito (derecho) */
+.cart-modal-overlay {
+    z-index: 55;
+    /* Más alto que el sidebar overlay */
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    /* Permite clicks a través por defecto */
+}
+
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(80%, 400px);
+    /* Ancho responsive */
+    background-color: white;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-modal.active {
+    transform: translateX(0);
+}
+
+.cart-modal-overlay.active {
+    opacity: 0.5;
+    pointer-events: auto;
+    /* Bloquea el contenido detrás */
+}
+
+.cart-modal-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.nav-link {
+    position: relative;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #f9d66d;
+    /* Amarillo pastel */
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #f9d66d;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
