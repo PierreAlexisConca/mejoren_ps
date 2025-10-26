@@ -13,9 +13,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloBot.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/EstiloOscuro.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Microfono.css') }}">
 </head>
 
 <body>
+    <!-- HEADER -->
     <header class="bg-white shadow-custom-light fixed w-full z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
@@ -41,6 +45,15 @@
                     Mi cuenta
                 </a>
             </div>
+            <!-- Botón de Búsqueda por Voz -->
+            <button id="voice-search-button"
+                class="text-palees-blue text-2xl p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative"
+                title="Búsqueda por Voz">
+                <i class="fas fa-microphone"></i>
+                <!-- Mic active indicator -->
+                <span id="mic-status-indicator"
+                    class="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500 hidden border-2 border-white"></span>
+            </button>
             <div class="flex items-center">
                 <button id="cart-button"
                     class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
@@ -64,7 +77,7 @@
         </div>
         <section class="py-16 bg-white">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-dosis font-bold text-center text-palees-blue mb-12">Nuestros Favoritos</h2>
+                <h2 class="text-4xl font-dosis font-bold text-center text-palees-blue mb-12 titulo-seccion">Nuestros Favoritos</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="product-card bg-white rounded-xl shadow-custom-medium overflow-hidden">
                         <img src="{{ url_for('static', filename='image/CamisaLino.jpeg') }}" alt="Camisa de Lino"
@@ -124,15 +137,14 @@
     <!-- SECCIÓN DE CARACTERÍSTICAS / PROPUESTA DE VALOR -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">¿Por qué elegir Palees?</h2>
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12 titulo-seccion">¿Por qué elegir Palees?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-
                 <!-- Característica 1: Algodón Pima -->
                 <div
                     class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
                     <i class="fas fa-seedling text-4xl text-palees-yellow mb-4"></i>
                     <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Algodón Pima Peruano</h3>
-                    <p class="text-palees-text-medium text-sm">El algodón más fino del mundo. Ultra suave, ligero y
+                    <p class="text-sm text-blue-900">El algodón más fino del mundo. Ultra suave, ligero y
                         resistente al pilling.</p>
                 </div>
 
@@ -141,7 +153,7 @@
                     class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
                     <i class="fas fa-palette text-4xl text-palees-yellow mb-4"></i>
                     <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Colores Vivos</h3>
-                    <p class="text-palees-text-medium text-sm">Teñido reactivo para colores que resisten el paso del
+                    <p class="text-sm text-blue-900">Teñido reactivo para colores que resisten el paso del
                         tiempo y los lavados.</p>
                 </div>
 
@@ -150,7 +162,7 @@
                     class="p-6 bg-palees-gray-light rounded-xl shadow-custom-light transform hover:scale-105 transition-transform duration-300">
                     <i class="fas fa-shipping-fast text-4xl text-palees-yellow mb-4"></i>
                     <h3 class="text-xl font-semibold text-palees-text-dark mb-2">Envío Express</h3>
-                    <p class="text-palees-text-medium text-sm">Recibe tu pedido en 24-48 horas. Rápido y seguro a todo
+                    <p class="text-sm text-blue-900">Recibe tu pedido en 24-48 horas. Rápido y seguro a todo
                         el país.</p>
                 </div>
             </div>
@@ -160,7 +172,7 @@
     <!-- SECCIÓN DE CATEGORÍAS DESTACADAS -->
     <section id="featured" class="py-16 bg-palees-bg-gray">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">Explora nuestras categorías
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12 titulo-seccion">Explora nuestras categorías
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -207,61 +219,54 @@
         </div>
     </section>
 
-    <!-- SECCIÓN TESTIMONIOS -->
+    <!-- SECCIÓN TESTIMONIOS 2X2 -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12">
+            <h2 class="text-3xl font-dosis font-bold text-center text-palees-blue mb-12 titulo-seccion">
                 Lo que dicen nuestros clientes
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Columna Izquierda -->
-                <div class="flex flex-col gap-8">
-                    <!-- Comentario 1 -->
-                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
-                        <p class="text-gray-700 italic">
-                            “La mejor calidad de polos que he comprado en años! La tela es increíblemente suave y no
-                            pierde la forma después de lavar. Definitivamente volveré a comprar.”
-                        </p>
-                        <h4 class="mt-3 font-semibold text-palees-blue">— Andrea G.</h4>
-                        <span class="text-gray-400 text-xs">Compradora verificada</span>
-                    </div>
-
-                    <!-- Comentario 2 -->
-                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
-                        <p class="text-gray-700 italic">
-                            “El envío fue rapidísimo y la atención al cliente excelente. Los polos llegaron perfectos y
-                            exactamente como en la foto. ¡Recomendados!”
-                        </p>
-                        <h4 class="mt-3 font-semibold text-palees-blue">— Carlos M.</h4>
-                        <span class="text-gray-400 text-xs">Comprador verificado</span>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Comentario 1 -->
+                <div class="bg-palees-gray-light p-8 rounded-2xl shadow-custom-medium border-l-8 border-palees-yellow">
+                    <p class="text-palees-text-dark text-lg italic">
+                        “La mejor calidad de polos que he comprado en años! La tela es increíblemente suave y no pierde
+                        la forma después de lavar. Definitivamente volveré a comprar.”
+                    </p>
+                    <h4 class="mt-3 font-bold text-palees-blue">— Andrea G.</h4>
+                    <span class="text-sm text-palees-text-medium">Compradora verificada</span>
                 </div>
 
-                <!-- Columna Derecha -->
-                <div class="flex flex-col gap-8">
-                    <!-- Comentario 3 -->
-                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
-                        <p class="text-gray-700 italic">
-                            “Muy satisfecho con la compra. La calidad de los materiales es excelente y los diseños son
-                            tal como esperaba. Volveré a comprar sin dudarlo.”
-                        </p>
-                        <h4 class="mt-3 font-semibold text-palees-blue">— Mariana R.</h4>
-                        <span class="text-gray-400 text-xs">Compradora verificada</span>
-                    </div>
+                <!-- Comentario 2 -->
+                <div class="bg-palees-gray-light p-8 rounded-2xl shadow-custom-medium border-l-8 border-palees-yellow">
+                    <p class="text-palees-text-dark text-lg italic">
+                        “El envío fue rapidísimo y la atención al cliente excelente. Los polos llegaron perfectos y
+                        exactamente como en la foto. ¡Recomendados!”
+                    </p>
+                    <h4 class="mt-3 font-bold text-palees-blue">— Carlos M.</h4>
+                    <span class="text-sm text-palees-text-medium">Compradora verificada</span>
+                </div>
 
-                    <!-- Comentario 4 -->
-                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-palees-yellow">
-                        <p class="text-gray-700 italic">
-                            “Excelente experiencia de compra. Los productos llegaron antes de lo esperado y la calidad
-                            superó mis expectativas. ¡Sin duda volveré a comprar en PALEES!”
-                        </p>
-                        <h4 class="mt-3 font-semibold text-palees-blue">— José L.</h4>
-                        <span class="text-gray-400 text-xs">Comprador verificado</span>
-                    </div>
+                <!-- Comentario 3 -->
+                <div class="bg-palees-gray-light p-8 rounded-2xl shadow-custom-medium border-l-8 border-palees-yellow">
+                    <p class="text-palees-text-dark text-lg italic">
+                        “Muy satisfecho con la compra. La calidad de los materiales es excelente y los diseños son tal
+                        como esperaba. Volveré a comprar sin dudarlo.”
+                    </p>
+                    <h4 class="mt-3 font-bold text-palees-blue">— Mariana R.</h4>
+                    <span class="text-sm text-palees-text-medium">Compradora verificada</span>
+                </div>
+
+                <!-- Comentario 4 -->
+                <div class="bg-palees-gray-light p-8 rounded-2xl shadow-custom-medium border-l-8 border-palees-yellow">
+                    <p class="text-palees-text-dark text-lg italic">
+                        “Excelente experiencia de compra. Los productos llegaron antes de lo esperado y la calidad
+                        superó mis expectativas. ¡Sin duda volveré a comprar en PALEES!”
+                    </p>
+                    <h4 class="mt-3 font-bold text-palees-blue">— José L.</h4>
+                    <span class="text-sm text-palees-text-medium">Compradora verificada</span>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- BANNER DE CTA (Call To Action) -->
@@ -312,261 +317,37 @@
         </div>
     </div>
 
-        <!-- BOTÓN DE MODO OSCURO -->
-        <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
-            <button id="modoBtn"
-                style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
-                🌙 Modo Oscuro
-            </button>
+    <!-- 💖 CHATBOT PALEES - TIENDA DE ROPA SAN LUIS -->
+    <div id="chatbot-wrapper">
+        <!-- Botón flotante -->
+        <button id="chat-toggle">💬</button>
+
+        <!-- Contenedor del chatbot -->
+        <div id="chatbot-container">
+            <div id="chat-header">PaleesBot 💬</div>
+            <div id="chat-body"></div>
+            <div id="chat-input-area">
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+                <button id="send-btn">Enviar</button>
+            </div>
         </div>
-        
-        <script>
-            const boton = document.getElementById('modoBtn');
-            boton.addEventListener('click', () => {
-                document.body.classList.toggle('modo-oscuro');
-                if (document.body.classList.contains('modo-oscuro')) {
-                    boton.textContent = '☀️ Modo Claro';
-                } else {
-                    boton.textContent = '🌙 Modo Oscuro';
-                }
-            });
-        </script>
-        
-        <style>
-            .modo-oscuro {
-                background-color: #121212 !important;
-                color: #f5f5f5 !important;
-            }
-        
-            .modo-oscuro header,
-            .modo-oscuro section,
-            .modo-oscuro footer {
-                background-color: #1e1e1e !important;
-                color: #e0e0e0 !important;
-            }
-        </style>
+    </div>
+
+    <!-- BOTÓN DE MODO OSCURO -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+        <button id="modoBtn"
+            style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
+            🌙 Modo Oscuro
+        </button>
+    </div>
 
     {% include 'footer.html' %}
     <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Bot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ModoOscuro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voiceSearch.js') }}"></script>
 
-
-
-<!-- 💖 CHATBOT PALEES - TIENDA DE ROPA SAN LUIS -->
-<div id="chatbot-wrapper">
-  <!-- Botón flotante -->
-  <button id="chat-toggle">💬</button>
-
-  <!-- Contenedor del chatbot -->
-  <div id="chatbot-container">
-    <div id="chat-header">PaleesBot 💬</div>
-    <div id="chat-body"></div>
-    <div id="chat-input-area">
-      <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
-      <button id="send-btn">Enviar</button>
-    </div>
-  </div>
-</div>
-
-<style>
-/* 📍 CONTENEDOR GENERAL */
-#chatbot-wrapper {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 9999;
-}
-
-/* 💬 BOTÓN FLOTANTE */
-#chat-toggle {
-  width: 60px;
-  height: 60px;
-  background: #1613e6;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 26px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-#chat-toggle:hover {
-  transform: scale(1.1);
-  background: #0f0dcf;
-}
-
-/* 💬 CAJA DEL CHAT */
-#chatbot-container {
-  display: none; /* Oculto por defecto */
-  flex-direction: column;
-  position: absolute;
-  bottom: 80px;
-  left: 0;
-  width: 320px;
-  height: 430px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
-  animation: fadeIn 0.3s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* 🟦 ENCABEZADO */
-#chat-header {
-  background: #1613e6;
-  color: white;
-  padding: 12px;
-  text-align: center;
-  font-weight: bold;
-}
-
-/* 📄 CUERPO DEL CHAT */
-#chat-body {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
-  font-size: 14px;
-}
-
-/* ✏️ INPUT */
-#chat-input-area {
-  display: flex;
-  border-top: 1px solid #5555e8;
-}
-#user-input {
-  flex: 1;
-  border: none;
-  padding: 10px;
-  font-size: 14px;
-}
-#user-input:focus { outline: none; }
-#send-btn {
-  background: #1e25e9;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-}
-
-/* 💬 MENSAJES */
-.message {
-  margin: 6px 0;
-  padding: 8px 10px;
-  border-radius: 10px;
-  max-width: 80%;
-}
-.user {
-  background: #d6d5d5;
-  align-self: flex-end;
-}
-.bot {
-  background: #bbcdf8;
-  align-self: flex-start;
-}
-
-/* 📱 RESPONSIVE */
-@media (max-width: 768px) {
-  #chatbot-container {
-    width: 90vw;
-    left: 5vw;
-    bottom: 80px;
-    height: 70vh;
-  }
-}
-</style>
-
-<script>
-/* 🔹 ELEMENTOS */
-const chatWrapper = document.getElementById("chatbot-wrapper");
-const chatContainer = document.getElementById("chatbot-container");
-const chatToggle = document.getElementById("chat-toggle");
-const chatBody = document.getElementById("chat-body");
-const sendBtn = document.getElementById("send-btn");
-const userInput = document.getElementById("user-input");
-
-/* 🔹 ABRIR / CERRAR CHAT */
-chatToggle.addEventListener("click", () => {
-  if (chatContainer.style.display === "flex") {
-    chatContainer.style.display = "none";
-  } else {
-    chatContainer.style.display = "flex";
-  }
-});
-
-/* 🔹 FUNCIÓN DE MENSAJES */
-function addMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.classList.add("message", sender);
-  msg.textContent = text;
-  chatBody.appendChild(msg);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-/* 🔹 RESPUESTAS DEL BOT */
-function botReply(message) {
-  message = message.toLowerCase();
-  let reply = "No entiendo tu mensaje 😅. ¿Podrías reformularlo?";
-
-  if (message.includes("hola") || message.includes("buenas"))
-    reply = "¡Hola! 👋 Soy PaleesBot. Bienvenida a *Palees*, tu tienda de ropa favorita en San Luis. ¿Buscas algo especial hoy?";
-  
-  else if (message.includes("ropa") || message.includes("vestido") || message.includes("blusa") || message.includes("pantalón"))
-    reply = "Tenemos ropa casual, elegante, urbana y deportiva 👗👖. También blusas, vestidos y conjuntos. ¿Qué tipo te interesa?";
-  
-  else if (message.includes("precio") || message.includes("cuánto") || message.includes("coste"))
-    reply = "Nuestros precios van desde S/39.90 hasta S/149.90 dependiendo del producto 💸. ¿Quieres saber el precio de algo específico?";
-  
-  else if (message.includes("ubicación") || message.includes("dónde") || message.includes("dirección"))
-    reply = "Estamos en **San Luis, Cañete, Perú 📍**, cerca de la plaza principal. ¡Te esperamos!";
-  
-  else if (message.includes("horario") || message.includes("hora"))
-    reply = "Atendemos de **lunes a sábado, de 9:00 a.m. a 8:00 p.m.**, y los domingos de 10:00 a.m. a 6:00 p.m. 🕗";
-  
-  else if (message.includes("envío") || message.includes("delivery"))
-    reply = "¡Sí! Hacemos envíos a todo el Perú 🚚. Los envíos en Cañete son gratis por compras mayores a S/100.";
-  
-  else if (message.includes("pago") || message.includes("tarjeta") || message.includes("yape") || message.includes("plin"))
-    reply = "Aceptamos pagos con Yape, Plin, transferencia bancaria y efectivo 💳📱💵.";
-  
-  else if (message.includes("redes") || message.includes("instagram") || message.includes("facebook"))
-    reply = "Puedes seguirnos en nuestras redes sociales: 💖\n📸 Instagram: @palees.peru\n📘 Facebook: Palees Tienda de Ropa";
-  
-  else if (message.includes("contacto") || message.includes("número") || message.includes("whatsapp"))
-    reply = "Puedes escribirnos al WhatsApp 📞 **+51 987 654 321** para atención personalizada.";
-  
-  else if (message.includes("gracias") || message.includes("ok"))
-    reply = "¡Con gusto! 💕 Si necesitas ayuda con algo más, estoy aquí.";
-  
-  else if (message.includes("ayuda") || message.includes("menu"))
-    reply = "Puedo ayudarte con:\n👗 Tipos de ropa\n💸 Precios\n🕗 Horarios\n📍 Ubicación\n🚚 Envíos\n💳 Pagos\n📱 Redes sociales";
-
-  setTimeout(() => addMessage("bot", reply), 600);
-}
-
-/* 🔹 ENVÍO DE MENSAJE */
-sendBtn.addEventListener("click", () => {
-  const text = userInput.value.trim();
-  if (text === "") return;
-  addMessage("user", text);
-  userInput.value = "";
-  botReply(text);
-});
-
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendBtn.click();
-});
-
-/* 🔹 MENSAJE DE BIENVENIDA */
-window.onload = () => {
-  setTimeout(() => addMessage("bot", "¡Hola! 👋 Soy PaleesBot, tu asistente virtual de la tienda *Palees* en San Luis 🛍️"), 500);
-  setTimeout(() => addMessage("bot", "Puedo ayudarte con horarios, precios, tipos de ropa, envíos y mucho más 💕"), 1200);
-};
-</script>
 
 </body>
 

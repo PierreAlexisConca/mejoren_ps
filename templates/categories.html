@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloBot.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/EstiloOscuro.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Microfono.css') }}">
 </head>
 
 <body class="bg-palees-gray-light text-palees-text-dark">
@@ -45,14 +47,14 @@
                 </a>
             </div>
             <!-- Botón de Búsqueda por Voz -->
-                <button id="voice-search-button"
-                    class="text-palees-blue text-2xl p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative"
-                    title="Búsqueda por Voz">
-                    <i class="fas fa-microphone"></i>
-                    <!-- Mic active indicator -->
-                    <span id="mic-status-indicator"
-                        class="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500 hidden border-2 border-white"></span>
-                </button>
+            <button id="voice-search-button"
+                class="text-palees-blue text-2xl p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative"
+                title="Búsqueda por Voz">
+                <i class="fas fa-microphone"></i>
+                <!-- Mic active indicator -->
+                <span id="mic-status-indicator"
+                    class="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500 hidden border-2 border-white"></span>
+            </button>
             <div class="flex items-center">
                 <button id="cart-button"
                     class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
@@ -71,7 +73,7 @@
 
             <!-- Título -->
             <div class="mb-8">
-                <h1 class="text-4xl font-dosis font-extrabold text-palees-blue mb-2">Colección Completa</h1>
+                <h1 class="text-4xl font-dosis font-extrabold text-palees-blue mb-2 titulo-seccion">Colección Completa</h1>
                 <p class="text-palees-text-medium text-lg">Descubre la suavidad inigualable del algodón Pima en todos
                     nuestros diseños.</p>
             </div>
@@ -375,7 +377,7 @@
     <!-- OVERLAY DEL CARRITO -->
     <div id="cart-modal-overlay" class="fixed inset-0 bg-black opacity-0 hidden transition-opacity duration-300 z-40"
         onclick="toggleCartModal()"></div>
-                
+
     <!-- MODAL DEL CARRITO (panel derecho) -->
     <div id="cart-modal"
         class="cart-modal fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
@@ -384,7 +386,8 @@
             <div
                 class="cart-modal-header p-6 border-b border-palees-bg-gray flex justify-between items-center sticky top-0 bg-white z-10">
                 <h2 class="text-2xl font-dosis font-bold text-palees-blue">Tu Carrito</h2>
-                <button id="close-cart-btn" class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
+                <button id="close-cart-btn"
+                    class="text-2xl text-blue-600 hover:text-blue-800 transition">&times;</button>
             </div>
 
             <!-- Contenedor productos (tu código) -->
@@ -405,17 +408,38 @@
             </div>
         </div>
     </div>
+    <!-- 💖 CHATBOT PALEES - TIENDA DE ROPA SAN LUIS -->
+    <div id="chatbot-wrapper">
+        <!-- Botón flotante -->
+        <button id="chat-toggle">💬</button>
 
+        <!-- Contenedor del chatbot -->
+        <div id="chatbot-container">
+            <div id="chat-header">PaleesBot 💬</div>
+            <div id="chat-body"></div>
+            <div id="chat-input-area">
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+                <button id="send-btn">Enviar</button>
+            </div>
+        </div>
+    </div>
 
-
-
-{% include 'footer.html' %}
+    <!-- BOTÓN DE MODO OSCURO -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+        <button id="modoBtn"
+            style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
+            🌙 Modo Oscuro
+        </button>
+    </div>
+    <!-- CRÍTICO: Footer (asegura estilos y coherencia) -->
+    {% include 'footer.html' %}
 
     <!-- Scripts -->
-    <script src="/static/js/cart.js"></script>
-    <script src="/static/js/card.js"></script>
-    <script src="/static/js/voiceSearch.js"></script>
-
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/card.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voiceSearch.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Bot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ModoOscuro.js') }}"></script>
 </body>
 
 </html>

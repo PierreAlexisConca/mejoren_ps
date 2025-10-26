@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/EstiloOscuro.css') }}">
 </head>
 
 <body>
@@ -59,7 +60,8 @@
 
             <!-- Contenedor principal del formulario -->
             <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-10 border-t-8 border-palees-blue">
-                <h1 class="text-4xl font-dosis font-extrabold text-palees-blue text-center mb-2">Bienvenido</h1>
+                <h1 class="text-4xl font-dosis font-extrabold text-palees-blue text-center mb-2 titulo-seccion">
+                    Bienvenido</h1>
                 <p class="text-center text-palees-text-medium mb-8">Administra tu cuenta de forma fácil y segura.</p>
 
                 <!-- Selector de Vista (Login/Register) -->
@@ -196,6 +198,13 @@
             </div>
         </div>
     </div>
+    <!-- BOTÓN DE MODO OSCURO -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+        <button id="modoBtn"
+            style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
+            🌙 Modo Oscuro
+        </button>
+    </div>
 
 
     <!-- FOOTER - Mantenemos el mismo de la página de inicio -->
@@ -203,7 +212,7 @@
     <script src="{{ url_for('static', filename='js/loginregistro.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
     <script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/ModoOscuro.js') }}"></script>
 </body>
 
 </html>

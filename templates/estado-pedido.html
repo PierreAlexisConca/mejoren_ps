@@ -6,43 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rastreo de Pedido | Palees</title>
 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloBot.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/EstiloOscuro.css') }}">
 </head>
 
-<body class="bg-palees-gray-light text-palees-text-dark min-h-screen pt-16">
+<body class="bg-palees-gray-light text-palees-text-dark">
 
-    <header class="bg-white shadow-custom-light sticky w-full top-0 z-50">
+    <!-- HEADER SIN fixed -->
+    <header class="bg-white shadow-custom-light w-full">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/"
-                class="text-3xl header-logo font-dosis font-extrabold text-palees-blue cursor-pointer">PALEES</a>
-
+            <a href="{{ url_for('index') }}" class="text-3xl header-logo cursor-pointer">PALEES</a>
             <div class="hidden md:flex space-x-8 lg:space-x-12">
-                <a href="/"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Inicio</a>
-                <a href="/coleccion"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Categorías</a>
-                <a href="/ofertas"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Ofertas</a>
-                <a href="/contacto"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Contactanos</a>
-                <a href="/cuenta"
-                    class="nav-link text-palees-text-dark hover:text-palees-yellow font-medium transition-colors duration-300">Mi
-                    cuenta</a>
+                <a href="{{ url_for('index') }}"
+                    class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                    Inicio
+                </a>
+                <a href="{{ url_for('coleccion') }}"
+                    class="nav-link {% if request.path == url_for('coleccion') %}active{% endif %}">
+                    Categorías
+                </a>
+                <a href="{{ url_for('ofertas') }}"
+                    class="nav-link {% if request.path == url_for('ofertas') %}active{% endif %}">
+                    Ofertas
+                </a>
+                <a href="{{ url_for('contacto') }}"
+                    class="nav-link {% if request.path == url_for('contacto') %}active{% endif %}">
+                    Contáctanos
+                </a>
+                <a href="{{ url_for('cuenta') }}"
+                    class="nav-link {% if request.path == url_for('cuenta') %}active{% endif %}">
+                    Mi cuenta
+                </a>
             </div>
 
+            <button id="voice-search-button"
+                class="text-palees-blue text-2xl p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative"
+                title="Búsqueda por Voz">
+                <i class="fas fa-microphone"></i>
+                <span id="mic-status-indicator"
+                    class="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500 hidden border-2 border-white"></span>
+            </button>
+
             <div class="flex items-center">
-                <button
-                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm shadow-custom-light">
-                    <span>carrito</span>
+                <button id="cart-button"
+                    class="cart-btn bg-palees-yellow text-palees-blue rounded-full px-5 py-2 flex items-center space-x-2 font-semibold text-sm hover:bg-yellow-500 transition-colors duration-300 shadow-sm">
+                    <span>Carrito</span>
                     <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count"
+                        class="bg-palees-blue text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </button>
             </div>
         </nav>
     </header>
-
 
     <div class="container mx-auto px-6">
 
@@ -95,8 +117,21 @@
         </div>
     </div>
 
+    <!-- BOTÓN DE MODO OSCURO -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+        <button id="modoBtn"
+            style="background-color:#1A237E; color:white; padding:10px 15px; border:none; border-radius:8px; cursor:pointer;">
+            🌙 Modo Oscuro
+        </button>
+    </div>
+
+    {% include 'footer.html' %}
+
     <script src="{{ url_for('static', filename='js/pedido.js') }}"></script>
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/card.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ModoOscuro.js') }}"></script>
+
 </body>
 
 </html>
